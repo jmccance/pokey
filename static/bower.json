@@ -1,0 +1,21 @@
+{
+  "name": "pokey-client",
+  "version": "1.0.0-SNAPSHOT",
+
+  "ignore": [
+      "**/.*",
+      "node_modules",
+      "bower_components",
+      "test",
+      "tests"
+  ],
+
+  "devDependencies": {
+    "jquery": "1.9.1",
+    "underscore": "1.5.2",
+    "bootstrap": "3.0.3",
+    "angular": "1.2.5",
+    "angular-route": "1.2.5",
+    "requirejs": "2.1.9"
+  }
+}

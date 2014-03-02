@@ -1,20 +1,4 @@
 restify = require 'restify'
-bunyan = require 'bunyan'
-
-log = bunyan.createLogger(
-  name: 'pokey'
-  streams: [
-    {
-      stream: process.stdout
-      level: 'debug'
-    }
-    {
-      path: 'pokey.log'
-      level: 'trace'
-    }
-  ]
-  serializers: restify.bunyan.serializers
-)
 
 server = restify.createServer(log: log)
 
@@ -35,7 +19,7 @@ server.get '/api/rooms/:roomId', (req, res, next) ->
 # adjusting restify/lib/plugins/static.js to do a simple join of directory
 # with the URL part. Awful, but effective.
 server.get /\/?.*/, restify.serveStatic
-  directory: './public'
+  directory: './static'
   default: 'index.html'
 
 
