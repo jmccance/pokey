@@ -4,6 +4,7 @@
   "author": "Joel McCance",
   "version": "0.0.1",
   "dependencies": {
+    "connect": "2.13.0",
     "restify": "2.6.2",
     "socket.io": "0.8.7"
   },
