@@ -6,7 +6,7 @@
 
   "repository": {
     "type": "git",
-    "url": "http://github.com/jmccance/pokey"
+    "url": "http://bitbucket.org/jmccance/pokey.git"
   },
 
   "dependencies": {
