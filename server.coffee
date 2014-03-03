@@ -1,7 +1,11 @@
 restify = require 'restify'
 connect = require 'connect'
+socketio = require 'socket.io'
+
+Pokey = require './lib/pokey'
 
 server = restify.createServer()
+io = socketio.listen(server)
 
 ###
   Plugins
@@ -12,11 +16,10 @@ server.use restify.bodyParser(mapParams: false)
   Routes
 ###
 
-# API routes
-server.get '/api/rooms', (req, res, next) ->
-server.get '/api/rooms/:roomId', (req, res, next) ->
+# Configure the API
+pokey = new Pokey(io)
 
-# Static client route
+# Configure the static client
 server.get /\/?.*/, restify.serveStatic
   directory: './static'
   default: 'index.html'
