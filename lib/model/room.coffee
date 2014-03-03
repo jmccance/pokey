@@ -16,5 +16,10 @@ class Room
   @delete: (id) -> delete @rooms[id]
 
   constructor: (@name, @owner) ->
+    # Map of user IDs to estimates. Estimates are null if not submitted yet.
+    # TODO Want to efficiently send both ID and name to client.
+    # May make sense to instead have an array of objects with a 'user' key and
+    # and 'estimate' key.
+    @estimates = @owner.id: null
 
 module.exports = Room

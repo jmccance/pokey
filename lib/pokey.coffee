@@ -1,3 +1,6 @@
+Room = require './model/room'
+User = require './model/user'
+
 ##
 # Manages the controllers and routes for a Pokey instance. At the moment, it just *is* the
 # controller.
@@ -56,6 +59,8 @@ class Pokey
 
         # Verify that the user owns the room.
         # Toggle the estimate visibility to visible.
+        if user.id == room.owner.id
+          room.isRevealed = true
 
       socket.on 'hideEstimates', ->
         # Get the user and current room from the socket
@@ -64,6 +69,8 @@ class Pokey
 
         # Verify that the user owns the room.
         # Toggle the estimate visibility to concealed.
+        if user.id == room.owner.id
+          room.isRevealed = false
 
       socket.on 'clearEstimates', ->
         # Get the user and current room from the socket
