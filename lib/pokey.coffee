@@ -6,9 +6,6 @@ class Pokey
   # Configure the provided socket.io server with the Pokey API.
   constructor: (@io) ->
     @io.sockets.on 'connection', (socket) ->
-      # TODO Associate this socket with a user.
-      # TODO
-
       socket.on 'createRoom', (room) ->
         socket.emit 'log', 'createRoom event'
 

@@ -3,10 +3,15 @@
   "description": "Planning poker with fancy charts",
   "author": "Joel McCance",
   "version": "0.0.1",
+
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/jmccance/pokey"
+  },
+
   "dependencies": {
-    "connect": "2.13.0",
-    "restify": "2.6.2",
-    "socket.io": "0.8.7"
+    "express": "3.4.8",
+    "socket.io": "0.9.15"
   },
   "engine": "node >= 0.6.6"
 }
