@@ -1,10 +1,10 @@
 require.config({
   paths: {
-    angular: '../bower_components/angular/angular',
-    angularRoute: '../bower_components/angular-route/angular-route',
-    bootstrap: '../bower_components/bootstrap/dist/js/bootstrap',
+    angular: '../lib/angular/angular',
+    angularRoute: '../lib/angular-route/angular-route',
+    bootstrap: '../lib/bootstrap/dist/js/bootstrap',
     highcharts: 'http://code.highcharts.com/highcharts',
-    jquery: '../bower_components/jquery/jquery'
+    jquery: '../lib/jquery/jquery'
   },
   shim: {
     'angular': {
