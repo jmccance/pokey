@@ -17,11 +17,10 @@ class Room
 
   constructor: (@owner) ->
     # Map of user IDs to estimates. Estimates are null if not submitted yet.
-    # TODO Want to efficiently send both ID and name to client.
-    # May make sense to instead have an array of objects with a 'user' key and
-    # and 'estimate' key.
     @id = null
-    @estimates = {}
+
+    # Users and their estimates are stored as a Map.<userId, {user: User, estimate: Estimate}>.
+    @members = {}
     @isRevealed = false
 
   isOwnedBy: (user) -> user.id == @owner.id
@@ -29,22 +28,41 @@ class Room
   ##
   # Add the specified user to the room. No-op if a user with that ID is already in the room.
   addUser: (user) ->
+    if !@members[user.id]?
+      @members[user.id] =
+        user: user
+        estimate: null
+
+  ##
+  # Remove a user from the room.
+  removeUser: (user) -> delete @members[user.id]
 
   ##
   # Set a user's estimate for the current task.
-  setEstimate: (user, estimate) ->
+  setEstimate: (user, estimate) -> @members[user.id].estimate = estimate
 
   ##
   # Unset everyone's estimates.
-  clearEstimates: ->
+  clearEstimates: -> @members[userId].estimate = null for userId of @members
 
   ##
   # Serialize the room. Hides everyone's estimates if they have not been revealed yet.
   #
-  # Note: Might make more sense to change this to return an object and use Express's method for
-  # sending JSON.
-  #
   # @returns {string} the room, serialized to JSON, concealing estimates if appropriate
   toJSON: ->
+    jsonObject =
+      id: @id
+      isRevealed: @isRevealed
+
+    # Function to censor an estimate. Unsubmitted estimates are null, submitted estimates are an
+    # empty object: truthy, but unrevealing.
+    censored = (estimate) -> if estimate? then {} else null
+
+    for userId, value of @members
+      jsonObject[userId] =
+        user: value.user
+        estimate: if @isRevealed then value.estimate else censored(value.estimate)
+
+    return JSON.stringify(jsonObject)
 
 module.exports = Room
