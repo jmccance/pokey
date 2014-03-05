@@ -25,6 +25,8 @@ class Room
 
   isOwnedBy: (user) -> user.id == @owner.id
 
+  contains: (user) -> @members[user.id]?
+
   ##
   # Add the specified user to the room. No-op if a user with that ID is already in the room.
   addUser: (user) ->
@@ -35,11 +37,22 @@ class Room
 
   ##
   # Remove a user from the room.
-  removeUser: (user) -> delete @members[user.id]
+  #
+  # @returns {boolean} true iff a user was removed
+  removeUser: (user) ->
+    isMember = @contains(user)
+    delete @members[user.id]
+    return isMember
 
   ##
   # Set a user's estimate for the current task.
-  setEstimate: (user, estimate) -> @members[user.id].estimate = estimate
+  #
+  # @returns {boolean} true iff the estimate changed
+  setEstimate: (user, estimate) ->
+    isEstimateIdentical = (estimate.equals(@members[user.id].estimate))
+    @members[user.id].estimate = estimate
+
+    return !isEstimateIdentical
 
   ##
   # Unset everyone's estimates.

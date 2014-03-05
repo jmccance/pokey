@@ -5,4 +5,8 @@
 class Estimate
   constructor: (@hours, @comment) ->
 
+  # Semantic equality test.
+  equals: (that) ->
+    @hours = that.hours && @comment == that.comment
+
 module.exports = Estimate
