@@ -7,10 +7,10 @@ User = require './model/user'
 class Pokey
   ##
   # Configure the provided socket.io server with the Pokey API.
-  constructor: (@io) ->
+  constructor: (io) ->
     @sessions = {}
 
-    @io.sockets.on 'connection', (socket) ->
+    io.sockets.on 'connection', (socket) ->
       ##
       # Register with your username. If the session is not already associated with a user, creates
       # a new one. Otherwise, simply updates the user's name with that provided in the request.
@@ -46,6 +46,7 @@ class Pokey
         # Return the newly created room object to the client. The client will
         # use the room ID to generate a URL that others can use to join the
         # room (and the owner can use to rejoin if disconnected.)
+        socket.emit('roomCreated', room.toJSON())
 
       ##
       # Join the specified room.
@@ -64,6 +65,11 @@ class Pokey
 
         # Set room (or room ID) to socket
         socket.set('room', room)
+        socket.join(room.id)
+
+        # Inform everyone that someone joined the room. Serves double-duty to provide the current
+        # room state to the new member.
+        io.sockets.in(room.id).emit('roomUpdated', room.toJSON())
 
       ##
       # Submit an estimate to the room.
@@ -75,8 +81,9 @@ class Pokey
         room = socket.get('room')
 
         # Set the user's estimate in this room.
-        room.setEstimate(user, estimate)
-        # If this changed the user's estimate from not-set to set, broadcast that to everyone else.
+        # If this changed the user's estimate, broadcast that to everyone else.
+        if room.setEstimate(user, estimate)
+          io.sockets.in(room.id).emit('roomUpdated', room.toJSON())
 
       ##
       # Reveal estimates to members of the room.
@@ -91,9 +98,11 @@ class Pokey
           room.isRevealed = true
 
           # Broadcast the revealed room to everyone.
+          io.sockets.in(room.id).emit('roomUpdated', room.toJSON())
 
       ##
-      # Conceal everyone's estimates. And I guess hope they have the memory of a goldfish.
+      # Conceal everyone's estimates. And I guess hope they have the memory of a goldfish and no
+      # logging enabled. Included for completeness, I guess?
       socket.on 'hideEstimates', ->
         # Get the user and current room from the socket
         user = socket.get('user')
@@ -101,10 +110,12 @@ class Pokey
 
         # Verify that the user owns the room.
         # Toggle the estimate visibility to concealed.
+        # Update everyone about the new room state.
         if room.isOwnedBy(user)
           room.isRevealed = false
 
           # Broadcast the revised room state.
+          io.sockets.in(room.id).emit('roomUpdated', room.toJSON())
 
       ##
       # Clear the current estimates.
@@ -115,7 +126,9 @@ class Pokey
 
         # Verify that the user owns the room.
         # Clear the room estimates.
-        room.clearEstimates()
         # Broadcast the updated room state.
+        if room.isOwnedBy(user)
+          room.clearEstimates()
+          io.sockets.in(room.id).emit('roomUpdated', room.toJSON())
 
 module.exports = Pokey

@@ -16,6 +16,6 @@ pokey = new Pokey(io)
 app.use(express.logger())
   .use(express.static(__dirname + '/static'))
 
-server.listen 8080, ->
+server.listen 8088, ->
   address = server.address()
   console.log('Pokey started at http://%s:%s', address.address, address.port)
