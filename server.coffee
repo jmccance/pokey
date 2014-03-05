@@ -11,7 +11,7 @@ io = socketio.listen(server)
 io.configure 'development', ->
   io.set 'transports', ['websocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']
 
-pokey = new Pokey(io)
+pokey = new Pokey(io.sockets)
 
 app.use(express.logger())
   .use(express.static(__dirname + '/static'))
