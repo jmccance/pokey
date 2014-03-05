@@ -11,47 +11,75 @@ class Pokey
     @sessions = {}
 
     @io.sockets.on 'connection', (socket) ->
+      ##
+      # Register with your username. If the session is not already associated with a user, creates
+      # a new one. Otherwise, simply updates the user's name with that provided in the request.
+      #
+      # @param {object} req
+      # @param {string} req.sessionId - the session ID, which the client got from its cookie
+      # @param {string} req.name - the name to register for this user
       socket.on 'register', (req) ->
         sessionId = req.sessionId
         user = 
           if !@sessions[sessionId]?
-            @sessions[sessionId] = {} # new User(name); User.add(user)
+            User.add(new User())
           else
             @sessions[sessionId]
 
         user.name = req.name
         socket.set('user', user)
 
-      socket.on 'createRoom', (req) ->
+      ##
+      # Create a new room. The user must be registered. The user will be the owner of the created
+      # room.
+      #
+      # @param {object} req
+      # @param {string} req.roomName - the name to give the room
+      socket.on 'createRoom', ->
         user = socket.get('user')
 
-        # Create a new room object with the name specified in the request,
-        # and with the requesting user as the owner.
-        room = {} # new Room(name, owner); Room.add(room)
+        # If no user is registered, return an error code.
+
+        # Create a new room owned by the user.
+        room = Room.add(new Room(user))
         
         # Return the newly created room object to the client. The client will
         # use the room ID to generate a URL that others can use to join the
         # room (and the owner can use to rejoin if disconnected.)
-        socket.emit 'log', 'createRoom event'
 
+      ##
+      # Join the specified room.
+      #
+      # @param {object} req
+      # @param {string} req.roomId - the ID of the room to join
       socket.on 'joinRoom', (req) ->
-        # Get the user from the socket.
+        # Get the user from the socket. If unregistered, return an error.
         user = socket.get('user')
 
         # Get room from room repo. Error if does not exist.
-        room = {} # Room.get(req.roomId)
+        room = Room.get(req.roomId)
 
-        # Add user to room object.
+        # Add user to room.
+        room.addUser(user)
+
         # Set room (or room ID) to socket
         socket.set('room', room)
 
-      socket.on 'submitEstimate', (req) ->
-        # Get the user and current room from the socket.
+      ##
+      # Submit an estimate to the room.
+      #
+      # @param {Estimate} estimate
+      socket.on 'submitEstimate', (estimate) ->
+        # Get and validate the user and current room from the socket.
         user = socket.get('user')
         room = socket.get('room')
 
-        # room.setEstimate(user.id, estimate)
+        # Set the user's estimate in this room.
+        room.setEstimate(user, estimate)
+        # If this changed the user's estimate from not-set to set, broadcast that to everyone else.
 
+      ##
+      # Reveal estimates to members of the room.
       socket.on 'showEstimates', ->
         # Get the user and current room from the socket
         user = socket.get('user')
@@ -59,9 +87,13 @@ class Pokey
 
         # Verify that the user owns the room.
         # Toggle the estimate visibility to visible.
-        if user.id == room.owner.id
+        if room.isOwnedBy(user)
           room.isRevealed = true
 
+          # Broadcast the revealed room to everyone.
+
+      ##
+      # Conceal everyone's estimates. And I guess hope they have the memory of a goldfish.
       socket.on 'hideEstimates', ->
         # Get the user and current room from the socket
         user = socket.get('user')
@@ -69,9 +101,13 @@ class Pokey
 
         # Verify that the user owns the room.
         # Toggle the estimate visibility to concealed.
-        if user.id == room.owner.id
+        if room.isOwnedBy(user)
           room.isRevealed = false
 
+          # Broadcast the revised room state.
+
+      ##
+      # Clear the current estimates.
       socket.on 'clearEstimates', ->
         # Get the user and current room from the socket
         user = socket.get('user')
@@ -79,5 +115,7 @@ class Pokey
 
         # Verify that the user owns the room.
         # Clear the room estimates.
+        room.clearEstimates()
+        # Broadcast the updated room state.
 
 module.exports = Pokey
