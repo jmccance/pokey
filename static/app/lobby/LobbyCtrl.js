@@ -31,10 +31,11 @@ define([], function () {
       // Handle room creation
       $scope.createRoom = function () {
         socket.emit('createRoom');
-      }
-
+      };
       socket.on('roomCreated', function (room) {
-        console.log(room)
+        $scope.$apply(function () {
+          $location.path('/room/' + room.id)
+        });
       });
     }
   ];
