@@ -1,14 +1,22 @@
 define([
-    // Mix-ins
-    'highcharts'
+  // Mix-ins
+  'highcharts'
 ], function () {
   'use strict';
 
   return [
     '$scope',
     '$routeParams',
-    function ($scope, $routeParams) {
-      $scope.roomName = $routeParams.roomName;
+    'socket',
+    function (
+        $scope,
+        $routeParams,
+        socket
+        ) {
+      var roomId = $routeParams.roomId;
+
+      // TODO If we're not already registered, we need to register.
+      // TODO Once we're registered, we need to join the room.
 
       $scope.users = [
         {

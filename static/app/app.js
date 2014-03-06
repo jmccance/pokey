@@ -6,6 +6,7 @@ define([
   'room/RoomCtrl',
 
   // Mix-ins
+  'angularBootstrap',
   'angularCookies',
   'angularRoute'
 ], function (
@@ -18,7 +19,9 @@ define([
 
   var pokeyApp = angular.module('pokeyApp', [
     'ngRoute',
-    'ngCookies'
+    'ngCookies',
+    'ui.bootstrap',
+    'ui.bootstrap.tpls'
   ]);
 
   pokeyApp
@@ -29,7 +32,7 @@ define([
                 templateUrl: 'views/lobby.html',
                 controller: 'LobbyCtrl'
               }).
-              when('/room/:roomName', {
+              when('/room/:roomId', {
                 templateUrl: 'views/room.html',
                 controller: 'RoomCtrl'
               });

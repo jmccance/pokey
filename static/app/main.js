@@ -1,6 +1,8 @@
 require.config({
   paths: {
     angular: '../lib/angular/angular',
+    angularBootstrapTemplates: '../lib/angular-bootstrap/ui-bootstrap-tpls',
+    angularBootstrap: '../lib/angular-bootstrap/ui-bootstrap',
     angularRoute: '../lib/angular-route/angular-route',
     angularCookies: '../lib/angular-cookies/angular-cookies',
     bootstrap: '../lib/bootstrap/dist/js/bootstrap',
@@ -12,8 +14,10 @@ require.config({
     'angular': {
       exports: 'angular'
     },
-    'angularRoute': ['angular'],
+    'angularBootstrapTemplates': ['angular'],
+    'angularBootstrap': ['angular', 'angularBootstrapTemplates'],
     'angularCookies': ['angular'],
+    'angularRoute': ['angular'],
     'bootstrap': {
       deps: ['jquery']
     },
@@ -32,6 +36,8 @@ window.name = "NG_DEFER_BOOTSTRAP!";
 require( [
   'angular',
   'app',
+
+  // Mixins
   'bootstrap'
 ], function(
     angular,
