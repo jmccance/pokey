@@ -10,7 +10,7 @@ class Pokey
   constructor: (sockets) ->
     @_sessions = {}
 
-    sockets.on 'connection', (socket) ->
+    sockets.on 'connection', (socket) =>
       ##
       # Register with your username. If the session is not already associated with a user, creates
       # a new one. Otherwise, simply updates the user's name with that provided in the request.
@@ -18,7 +18,7 @@ class Pokey
       # @param {object} req
       # @param {string} req.sessionId - the session ID, which the client got from its cookie
       # @param {string} req.name - the name to register for this user
-      socket.on 'register', (req) ->
+      socket.on 'register', (req) =>
         sessionId = req.sessionId
         user = 
           if !@_sessions[sessionId]?
@@ -35,7 +35,7 @@ class Pokey
       #
       # @param {object} req
       # @param {string} req.roomName - the name to give the room
-      socket.on 'createRoom', ->
+      socket.on 'createRoom', =>
         user = socket.get('user')
 
         # If no user is registered, return an error code.
@@ -53,7 +53,7 @@ class Pokey
       #
       # @param {object} req
       # @param {string} req.roomId - the ID of the room to join
-      socket.on 'joinRoom', (req) ->
+      socket.on 'joinRoom', (req) =>
         # Get the user from the socket. If unregistered, return an error.
         user = socket.get('user')
 
@@ -75,7 +75,7 @@ class Pokey
       # Submit an estimate to the room.
       #
       # @param {Estimate} estimate
-      socket.on 'submitEstimate', (estimate) ->
+      socket.on 'submitEstimate', (estimate) =>
         # Get and validate the user and current room from the socket.
         user = socket.get('user')
         room = socket.get('room')
@@ -87,7 +87,7 @@ class Pokey
 
       ##
       # Reveal estimates to members of the room.
-      socket.on 'showEstimates', ->
+      socket.on 'showEstimates', =>
         # Get the user and current room from the socket
         user = socket.get('user')
         room = socket.get('room')
@@ -103,7 +103,7 @@ class Pokey
       ##
       # Conceal everyone's estimates. And I guess hope they have the memory of a goldfish and no
       # logging enabled. Included for completeness, I guess?
-      socket.on 'hideEstimates', ->
+      socket.on 'hideEstimates', =>
         # Get the user and current room from the socket
         user = socket.get('user')
         room = socket.get('room')
@@ -119,7 +119,7 @@ class Pokey
 
       ##
       # Clear the current estimates.
-      socket.on 'clearEstimates', ->
+      socket.on 'clearEstimates', =>
         # Get the user and current room from the socket
         user = socket.get('user')
         room = socket.get('room')

@@ -1,15 +1,25 @@
 define([
   'angular',
+  'socketio',
+
   'lobby/LobbyCtrl',
   'room/RoomCtrl',
 
   // Mix-ins
+  'angularCookies',
   'angularRoute'
-], function (angular, LobbyCtrl, RoomCtrl) {
-
+], function (
+    angular,
+    socketio,
+    LobbyCtrl,
+    RoomCtrl
+    ) {
   'use strict';
 
-  var pokeyApp = angular.module('pokeyApp', ['ngRoute']);
+  var pokeyApp = angular.module('pokeyApp', [
+    'ngRoute',
+    'ngCookies'
+  ]);
 
   pokeyApp
       .config(['$routeProvider',
@@ -26,7 +36,15 @@ define([
         }])
 
       .controller('LobbyCtrl', LobbyCtrl)
-      .controller('RoomCtrl', RoomCtrl);
+      .controller('RoomCtrl', RoomCtrl)
+
+      .factory('socket', function() {
+        return socketio.connect();
+      })
+
+      .factory('sessionId', function($cookies) {
+        return $cookies['pokey.session'];
+      });
 
   return pokeyApp;
 });

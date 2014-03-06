@@ -2,20 +2,26 @@ require.config({
   paths: {
     angular: '../lib/angular/angular',
     angularRoute: '../lib/angular-route/angular-route',
+    angularCookies: '../lib/angular-cookies/angular-cookies',
     bootstrap: '../lib/bootstrap/dist/js/bootstrap',
     highcharts: 'http://code.highcharts.com/highcharts',
-    jquery: '../lib/jquery/jquery'
+    jquery: '../lib/jquery/jquery',
+    socketio: '../lib/socket.io-client/dist/socket.io'
   },
   shim: {
     'angular': {
       exports: 'angular'
     },
     'angularRoute': ['angular'],
+    'angularCookies': ['angular'],
     'bootstrap': {
       deps: ['jquery']
     },
     'highcharts': {
       deps: ['jquery']
+    },
+    'socketio': {
+      exports: 'io'
     }
   }
 });

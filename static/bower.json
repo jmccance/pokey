@@ -7,8 +7,9 @@
     "underscore": "1.5.2",
     "bootstrap": "3.0.3",
     "angular": "1.2.5",
+    "angular-cookies": "1.2.5",
     "angular-route": "1.2.5",
     "requirejs": "2.1.9",
-    "socket.io": "0.8.7"
+    "socket.io-client": "0.9.15"
   }
 }
