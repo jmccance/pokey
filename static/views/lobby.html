@@ -5,25 +5,23 @@
 <form data-role="form">
     <div class="form-group">
         <label>
-            Room
+            Username
             <input type="text"
                    class="form-control"
-                   data-ng-model="room"
-                   placeholder="Enter name"/>
-        </label>
-    </div>
-    <div class="form-group">
-        <label>
-            Name
-            <input type="text"
-                   class="form-control"
-                   data-ng-model="name"
+                   data-ng-model="username"
                    placeholder="Enter name"/>
         </label>
     </div>
 
     <button type="button"
             class="btn btn-primary"
-            data-ng-click="joinRoom()">Join
+            data-ng-click="register()">
+        Register
+    </button>
+
+    <button type="button"
+            class="btn btn-primary"
+            data-ng-click="createRoom()">
+        Create Room
     </button>
 </form>

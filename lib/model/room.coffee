@@ -62,20 +62,22 @@ class Room
   # Serialize the room. Hides everyone's estimates if they have not been revealed yet.
   #
   # @returns {string} the room, serialized to JSON, concealing estimates if appropriate
-  toJSON: ->
-    jsonObject =
+  sanitized: ->
+    clone =
       id: @id
+      owner: @owner
       isRevealed: @isRevealed
+      members: {}
 
     # Function to censor an estimate. Unsubmitted estimates are null, submitted estimates are an
     # empty object: truthy, but unrevealing.
     censored = (estimate) -> if estimate? then {} else null
 
     for userId, value of @members
-      jsonObject[userId] =
+      clone[userId] =
         user: value.user
         estimate: if @isRevealed then value.estimate else censored(value.estimate)
 
-    return JSON.stringify(jsonObject)
+    return clone
 
 module.exports = Room

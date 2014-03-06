@@ -20,14 +20,16 @@ class Pokey
       # @param {string} req.name - the name to register for this user
       socket.on 'register', (req) =>
         sessionId = req.sessionId
+        console.log(@_sessions)
         user = 
           if !@_sessions[sessionId]?
-            User.add(new User())
+            @_sessions[sessionId] = User.add(new User())
           else
             @_sessions[sessionId]
 
         user.name = req.name
         socket.set('user', user)
+        socket.emit('registered', user)
 
       ##
       # Create a new room. The user must be registered. The user will be the owner of the created
@@ -36,7 +38,10 @@ class Pokey
       # @param {object} req
       # @param {string} req.roomName - the name to give the room
       socket.on 'createRoom', =>
-        user = socket.get('user')
+        user = null
+        socket.get('user', (err, _user) =>
+          user = _user
+        )
 
         # If no user is registered, return an error code.
 
@@ -46,7 +51,7 @@ class Pokey
         # Return the newly created room object to the client. The client will
         # use the room ID to generate a URL that others can use to join the
         # room (and the owner can use to rejoin if disconnected.)
-        socket.emit('roomCreated', room.toJSON())
+        socket.emit('roomCreated', room.sanitized())
 
       ##
       # Join the specified room.
@@ -69,7 +74,7 @@ class Pokey
 
         # Inform everyone that someone joined the room. Serves double-duty to provide the current
         # room state to the new member.
-        sockets.in(room.id).emit('roomUpdated', room.toJSON())
+        sockets.in(room.id).emit('roomUpdated', room.sanitized())
 
       ##
       # Submit an estimate to the room.
@@ -83,7 +88,7 @@ class Pokey
         # Set the user's estimate in this room.
         # If this changed the user's estimate, broadcast that to everyone else.
         if room.setEstimate(user, estimate)
-          sockets.in(room.id).emit('roomUpdated', room.toJSON())
+          sockets.in(room.id).emit('roomUpdated', room.sanitized())
 
       ##
       # Reveal estimates to members of the room.
@@ -98,7 +103,7 @@ class Pokey
           room.isRevealed = true
 
           # Broadcast the revealed room to everyone.
-          sockets.in(room.id).emit('roomUpdated', room.toJSON())
+          sockets.in(room.id).emit('roomUpdated', room.sanitized())
 
       ##
       # Conceal everyone's estimates. And I guess hope they have the memory of a goldfish and no
@@ -115,7 +120,7 @@ class Pokey
           room.isRevealed = false
 
           # Broadcast the revised room state.
-          sockets.in(room.id).emit('roomUpdated', room.toJSON())
+          sockets.in(room.id).emit('roomUpdated', room.sanitized())
 
       ##
       # Clear the current estimates.
@@ -129,6 +134,6 @@ class Pokey
         # Broadcast the updated room state.
         if room.isOwnedBy(user)
           room.clearEstimates()
-          sockets.in(room.id).emit('roomUpdated', room.toJSON())
+          sockets.in(room.id).emit('roomUpdated', room.sanitized())
 
 module.exports = Pokey

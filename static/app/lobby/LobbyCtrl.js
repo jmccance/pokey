@@ -2,30 +2,40 @@ define([], function () {
   'use strict';
 
   return [
-    '$cookies',
     '$location',
     '$scope',
     'sessionId',
     'socket',
     function (
-        $cookies,
         $location,
         $scope,
         sessionId,
         socket
         ) {
-      $scope.room = '';
-      $scope.name = '';
+      $scope.username = '';
 
-      $scope.joinRoom = function () {
+      // Handle user registration
+      $scope.register = function () {
         socket.emit('register', {
-          sessionId: $cookies['pokey.session'],
-          name: $scope.name
+          sessionId: sessionId,
+          name: $scope.username
         });
-
-        socket.on('roomUpdated')
-        $location.path('/room/' + $scope.room);
       };
+
+      socket.on('registered', function (resp) {
+        $scope.$apply(function () {
+          $scope.username = resp.name;
+        });
+      });
+
+      // Handle room creation
+      $scope.createRoom = function () {
+        socket.emit('createRoom');
+      }
+
+      socket.on('roomCreated', function (room) {
+        console.log(room)
+      });
     }
   ];
 });
