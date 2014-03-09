@@ -4,39 +4,23 @@ define([], function () {
   return [
     '$location',
     '$scope',
-    'sessionId',
-    'socket',
+    'pokeyService',
     function (
         $location,
         $scope,
-        sessionId,
-        socket
+        pokeyService
         ) {
       $scope.username = '';
 
       // Handle user registration
       $scope.register = function () {
-        socket.emit('register', {
-          sessionId: sessionId,
-          name: $scope.username
-        });
+        pokeyService.register($scope.username);
       };
-
-      socket.on('registered', function (resp) {
-        $scope.$apply(function () {
-          $scope.username = resp.name;
-        });
-      });
 
       // Handle room creation
       $scope.createRoom = function () {
-        socket.emit('createRoom');
+        pokeyService.createRoom();
       };
-      socket.on('roomCreated', function (room) {
-        $scope.$apply(function () {
-          $location.path('/room/' + room.id)
-        });
-      });
     }
   ];
 });

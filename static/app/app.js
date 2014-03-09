@@ -4,6 +4,7 @@ define([
 
   'lobby/LobbyCtrl',
   'room/RoomCtrl',
+  'services/PokeyService',
 
   // Mix-ins
   'angularBootstrap',
@@ -13,7 +14,8 @@ define([
     angular,
     socketio,
     LobbyCtrl,
-    RoomCtrl
+    RoomCtrl,
+    PokeyService
     ) {
   'use strict';
 
@@ -45,9 +47,15 @@ define([
         return socketio.connect();
       })
 
-      .factory('sessionId', function($cookies) {
-        return $cookies['pokey.session'];
-      });
+      .factory('pokeyService', [
+        '$cookies',
+        'socket',
+        function(
+            $cookies,
+            socket
+            ) {
+          return new PokeyService(socket, $cookies['pokey.session']);
+        }]);
 
   return pokeyApp;
 });

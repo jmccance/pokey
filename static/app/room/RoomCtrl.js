@@ -5,18 +5,15 @@ define([
   'use strict';
 
   return [
+    '$modal',
     '$scope',
     '$routeParams',
-    'socket',
     function (
+        $modal,
         $scope,
-        $routeParams,
-        socket
+        $routeParams
         ) {
       var roomId = $routeParams.roomId;
-
-      // TODO If we're not already registered, we need to register.
-      // TODO Once we're registered, we need to join the room.
 
       $scope.users = [
         {
