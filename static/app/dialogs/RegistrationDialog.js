@@ -1,12 +1,12 @@
 define(function () {
   var RegistrationCtrl = function($scope, $modalInstance, pokeyService) {
-    $scope.username = '';
+    // Create a "sub-scope" of sorts since this is a "subcontroller". I don't pretend to understand
+    // quite what's going on here.
+    // See: http://stackoverflow.com/questions/18716113/scope-issue-in-angularjs-using-angularui-bootstrap-modal
+    $scope.dialog = {};
 
     $scope.register = function () {
-      console.log($scope);
-
-      // TODO Figure out why $scope.username isn't updating correctly.
-      pokeyService.register($scope.username);
+      pokeyService.register($scope.dialog.username);
       $modalInstance.close();
     };
   };
