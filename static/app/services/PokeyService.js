@@ -8,6 +8,14 @@ define(function() {
 
   // API Calls ////////////////////////
 
+  // TODO Implement promise-based API.
+  // All event-emitting calls should return a promise.
+
+  // TODO Implement listening.
+  // For events we expect to be receive from the server, provide a listener system. For example,
+  // RoomCtrl will want to be able to listen for 'roomUpdated' events so that it can update its
+  // display.
+
   PokeyService.prototype.register = function (name) {
     var req = {
       sessionId: this.sessionId,

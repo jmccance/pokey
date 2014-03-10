@@ -17,6 +17,11 @@ define([
         ) {
       var roomId = $routeParams.roomId;
 
+      // TODO Implement correct workflow.
+      // 1. Register user if not already registered.
+      // 2. After registration, join room.
+      // 3. Once the room is received, set up a listener for room updates.
+
       registrationDialog.show(function () {
         pokeyService.joinRoom(roomId);
       });
@@ -51,6 +56,11 @@ define([
         console.log('Revealing estimates');
         pokeyService.showEstimates();
 
+        // TODO Implement an EstimationChart abstraction layer.
+        // 1. update(data) - Takes a collection of estimates and updates the chart from them.
+        // 2. clear() - Clears the chart, perhaps hiding it as well
+        // 3. A constructor to handle naming the chart and its axes and specifying the range of
+        //    series.
         $('[data-node-name="chart"]').highcharts({
           chart: {
             type: 'column'
