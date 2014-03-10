@@ -17,7 +17,9 @@ define([
         ) {
       var roomId = $routeParams.roomId;
 
-      registrationDialog.show();
+      registrationDialog.show(function () {
+        pokeyService.joinRoom(roomId);
+      });
 
       $scope.users = [
         {
@@ -35,9 +37,20 @@ define([
       ];
 
       /**
+       * Submit the current estimate.
+       */
+      $scope.estimate = function () {
+        console.log('Submitting estimate');
+        pokeyService.submitEstimate({});
+      };
+
+      /**
        * Reveals the estimates and renders the chart.
        */
       $scope.reveal = function () {
+        console.log('Revealing estimates');
+        pokeyService.showEstimates();
+
         $('[data-node-name="chart"]').highcharts({
           chart: {
             type: 'column'
@@ -53,7 +66,7 @@ define([
           },
           yAxis: {
             title: {
-              text: 'Fruit eaten'
+              text: '# of votes'
             }
           },
           series: [
@@ -68,7 +81,7 @@ define([
        * Clear existing estimates. Must be the room owner in order to do so.
        */
       $scope.clear = function () {
-
+        pokeyService.clearEstimates();
       };
     }
   ];

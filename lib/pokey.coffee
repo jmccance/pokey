@@ -51,6 +51,10 @@ class Pokey
         user = getUser(socket)
 
         # If no user is registered, return an error code.
+        # TODO Revisit this error handling
+        if !user?
+          socket.emit('error', 'must register before creating a room')
+          return
 
         # Create a new room owned by the user.
         room = Room.add(new Room(user))
@@ -69,8 +73,16 @@ class Pokey
         # Get the user from the socket. If unregistered, return an error.
         user = getUser(socket)
 
+        if !user?
+          socket.emit('error', 'must register before joining a room')
+          return
+
         # Get room from room repo. Error if does not exist.
         room = Room.get(req.roomId)
+
+        if !room?
+          socket.emit('error', "no such room with id #{req.roomId}")
+          return
 
         # Add user to room.
         room.addUser(user)
