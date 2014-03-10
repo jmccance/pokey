@@ -44,29 +44,28 @@ define([
       .controller('LobbyCtrl', LobbyCtrl)
       .controller('RoomCtrl', RoomCtrl)
 
+      .factory('sessionId', [
+          '$cookies',
+          function($cookies) {
+            return $cookies['pokey.session'];
+          }
+      ])
+
       .factory('socket', function() {
         return socketio.connect();
       })
 
-      .factory('pokeyService', [
-        '$cookies',
+      .service('pokeyService', [
+        'sessionId',
         'socket',
-        function(
-            $cookies,
-            socket
-            ) {
-          return new PokeyService(socket, $cookies['pokey.session']);
-        }])
+        PokeyService
+      ])
 
-      .factory('registrationDialog', [
+      .service('registrationDialog', [
         '$modal',
         'pokeyService',
-        function(
-            $modal,
-            pokeyService
-            ) {
-          return new RegistrationDialog($modal, pokeyService);
-        }]);
+        RegistrationDialog
+      ]);
 
   return pokeyApp;
 });

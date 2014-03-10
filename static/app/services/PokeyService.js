@@ -7,7 +7,7 @@
 define(function() {
   'use strict';
 
-  var PokeyService = function (socket, sessionId) {
+  var PokeyService = function (sessionId, socket) {
     this.socket = socket;
     this.sessionId = sessionId;
   };
