@@ -1,8 +1,7 @@
 require.config({
   paths: {
     angular: '../lib/angular/angular',
-    angularBootstrapTemplates: '../lib/angular-bootstrap/ui-bootstrap-tpls',
-    angularBootstrap: '../lib/angular-bootstrap/ui-bootstrap',
+    angularBootstrap: '../lib/angular-bootstrap/ui-bootstrap-tpls',
     angularRoute: '../lib/angular-route/angular-route',
     angularCookies: '../lib/angular-cookies/angular-cookies',
     bootstrap: '../lib/bootstrap/dist/js/bootstrap',
@@ -14,8 +13,7 @@ require.config({
     'angular': {
       exports: 'angular'
     },
-    'angularBootstrapTemplates': ['angular'],
-    'angularBootstrap': ['angular', 'angularBootstrapTemplates'],
+    'angularBootstrap': ['angular'],
     'angularCookies': ['angular'],
     'angularRoute': ['angular'],
     'bootstrap': {
