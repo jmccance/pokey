@@ -5,15 +5,19 @@ define([
   'use strict';
 
   return [
-    '$modal',
     '$scope',
     '$routeParams',
+    'pokeyService',
+    'registrationDialog',
     function (
-        $modal,
         $scope,
-        $routeParams
+        $routeParams,
+        pokeyService,
+        registrationDialog
         ) {
       var roomId = $routeParams.roomId;
+
+      registrationDialog.show();
 
       $scope.users = [
         {

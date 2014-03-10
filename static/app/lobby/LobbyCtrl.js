@@ -5,17 +5,14 @@ define([], function () {
     '$location',
     '$scope',
     'pokeyService',
+    'registrationDialog',
     function (
         $location,
         $scope,
-        pokeyService
+        pokeyService,
+        registrationDialog
         ) {
-      $scope.username = '';
-
-      // Handle user registration
-      $scope.register = function () {
-        pokeyService.register($scope.username);
-      };
+      registrationDialog.show();
 
       // Handle room creation
       $scope.createRoom = function () {

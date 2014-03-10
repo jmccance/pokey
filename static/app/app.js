@@ -2,6 +2,7 @@ define([
   'angular',
   'socketio',
 
+  'dialogs/RegistrationDialog',
   'lobby/LobbyCtrl',
   'room/RoomCtrl',
   'services/PokeyService',
@@ -13,6 +14,7 @@ define([
 ], function (
     angular,
     socketio,
+    RegistrationDialog,
     LobbyCtrl,
     RoomCtrl,
     PokeyService
@@ -22,8 +24,7 @@ define([
   var pokeyApp = angular.module('pokeyApp', [
     'ngRoute',
     'ngCookies',
-    'ui.bootstrap',
-    'ui.bootstrap.tpls'
+    'ui.bootstrap'
   ]);
 
   pokeyApp
@@ -55,6 +56,16 @@ define([
             socket
             ) {
           return new PokeyService(socket, $cookies['pokey.session']);
+        }])
+
+      .factory('registrationDialog', [
+        '$modal',
+        'pokeyService',
+        function(
+            $modal,
+            pokeyService
+            ) {
+          return new RegistrationDialog($modal, pokeyService);
         }]);
 
   return pokeyApp;

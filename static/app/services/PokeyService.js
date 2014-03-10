@@ -12,11 +12,16 @@ define(function() {
     this.sessionId = sessionId;
   };
 
+  // API Calls ////////////////////////
+
   PokeyService.prototype.register = function(name) {
-    this.socket.emit('register', {
+    var req = {
       sessionId: this.sessionId,
       name: name
-    });
+    };
+
+    console.log('Registering', req);
+    this.socket.emit('register', req);
   };
 
   PokeyService.prototype.createRoom = function() {

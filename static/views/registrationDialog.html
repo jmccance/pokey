@@ -9,12 +9,13 @@
                 <label for="username">Username</label>
 
                 <input id="username"
+                       data-ng-model="username"
                        class="form-control col-sm-1"
                        type="text"/>
             </div>
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary">Register</button>
+        <button class="btn btn-primary" data-ng-click="register()">Register</button>
     </div>
 </form>
