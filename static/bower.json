@@ -7,6 +7,7 @@
     "angular-bootstrap": "0.10.0",
     "angular-cookies": "1.2.5",
     "angular-route": "1.2.5",
+    "bean": "1.0.6",
     "bootstrap": "3.0.3",
     "jquery": "1.9.1",
     "q": "1.0",
