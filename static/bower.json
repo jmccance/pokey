@@ -3,13 +3,14 @@
   "version": "1.0.0-SNAPSHOT",
 
   "dependencies": {
-    "jquery": "1.9.1",
-    "underscore": "1.5.2",
-    "bootstrap": "3.0.3",
     "angular": "1.2.5",
     "angular-bootstrap": "0.10.0",
     "angular-cookies": "1.2.5",
     "angular-route": "1.2.5",
+    "bootstrap": "3.0.3",
+    "jquery": "1.9.1",
+    "q": "1.0",
+    "underscore": "1.5.2",
     "requirejs": "2.1.9",
     "socket.io-client": "0.9.15"
   }
