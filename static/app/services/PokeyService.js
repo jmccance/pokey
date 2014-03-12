@@ -16,7 +16,26 @@ define([
   // API Calls ////////////////////////
 
   // TODO Implement promise-based API.
-  // All event-emitting calls should return a promise.
+  // Call-and-response calls should return a promise. These methods include register, joinRoom, createRoom. "Command"
+  // messages like "clearEstimates" or "submitEstimate" don't need this.
+  //
+  // Q supports a timeout, so if we don't get back the expected event within a certain interval we can fail the
+  // request. Note that the timeout method is on the promise, so we'll return something like
+  //
+  //     deferred.promise.timeout(TIMEOUT)
+
+  // TODO Implement bean-based listening
+  // We also need listeners. We've implemented a primitive listener system below but... I don't like it much. Consider
+  // pulling in the "bean" library for event handling, but fronting it here. E.g,:
+  //
+  //     _.each(['on', 'one', 'off'], function(method) {
+  //       PokeyService.prototype[method] = function() {
+  //         arguments.unshift(this);
+  //         bean[method].apply(arguments);
+  //       };
+  //     });
+  //
+  // Minified Bean is 10.052kb, so no biggie.
 
   PokeyService.prototype.register = function (name) {
     var req = {
