@@ -22,9 +22,13 @@ define([
       // 2. After registration, join room.
       // 3. Once the room is received, set up a listener for room updates.
 
-      registrationDialog.show(function () {
-        pokeyService.joinRoom(roomId);
-      });
+      if (!pokeyService.isRegistered()) {
+        pokeyService.on('registered', function () {
+          pokeyService.joinRoom(roomId);
+        });
+        
+        registrationDialog.show();
+      }
 
       $scope.users = [
         {

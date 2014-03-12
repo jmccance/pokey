@@ -10,6 +10,7 @@ define([
   var PokeyService = function (sessionId, socket) {
     this.socket = socket;
     this.sessionId = sessionId;
+    this.username = undefined;
   };
 
   // API Calls ////////////////////////
@@ -31,6 +32,9 @@ define([
     this.socket.emit('createRoom');
   };
 
+  /**
+   * @param {string} roomId
+   */
   PokeyService.prototype.joinRoom = function (roomId) {
     this.socket.emit('joinRoom', {
       roomId: roomId
@@ -51,6 +55,10 @@ define([
 
   PokeyService.prototype.clearEstimates = function () {
     this.socket.emit('clearEstimates');
+  };
+
+  PokeyService.prototype.isRegistered = function () {
+    return this.username !== undefined;
   };
 
   /**

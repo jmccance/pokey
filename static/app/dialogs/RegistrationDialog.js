@@ -21,9 +21,7 @@ define(function () {
     this.pokeyService = pokeyService;
   };
 
-  RegistrationDialog.prototype.show = function(fn) {
-    fn || (fn = function () {});
-
+  RegistrationDialog.prototype.show = function() {
     var self = this;
     this.$modal
         .open({
@@ -32,9 +30,6 @@ define(function () {
           resolve: {
             pokeyService: function () { return self.pokeyService; }
           }
-        })
-        .result.then(function () {
-          fn();
         });
   };
 
