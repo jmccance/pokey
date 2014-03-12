@@ -12,14 +12,20 @@ define([], function () {
         pokeyService,
         registrationDialog
         ) {
-      // TODO Workflow
-      // After a successful room creation, redirect to that room. (Arriving at the room will
-      // handle joining it.)
-
-      registrationDialog.show();
+      if (!pokeyService.isRegistered()) {
+        registrationDialog.show();
+      }
 
       // Handle room creation
       $scope.createRoom = function () {
+        // Once the room is successfully created, redirect to it.
+        pokeyService.one('roomCreated', function (room) {
+          console.log('Room created. Navigating to it.');
+          $scope.$apply(function () {
+            $location.path('/room/' + room.id);
+          });
+        });
+
         pokeyService.createRoom();
       };
     }

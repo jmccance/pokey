@@ -1,16 +1,34 @@
 define([
-  'q',
+  'bean',
+  'Q',
   'underscore'
 ], function (
-    q,
+    bean,
+    Q,
     _
     ) {
   'use strict';
 
   var PokeyService = function (sessionId, socket) {
+    var self = this;
+
     this.socket = socket;
     this.sessionId = sessionId;
     this.username = undefined;
+
+    socket.on('registered', function (user) {
+      console.log('Registered', user);
+      self.username = user.name;
+      self.fire('registered', user);
+    });
+
+    socket.on('roomCreated', function (room) {
+      console.log('roomCreated:', room);
+      self.fire('roomCreated', room);
+    } )
+    socket.on('roomUpdated', function (room) {
+      self.fire('roomUpdated', room);
+    })
   };
 
   // API Calls ////////////////////////
@@ -24,18 +42,14 @@ define([
   //
   //     deferred.promise.timeout(TIMEOUT)
 
-  // TODO Implement bean-based listening
-  // We also need listeners. We've implemented a primitive listener system below but... I don't like it much. Consider
-  // pulling in the "bean" library for event handling, but fronting it here. E.g,:
-  //
-  //     _.each(['on', 'one', 'off'], function(method) {
-  //       PokeyService.prototype[method] = function() {
-  //         arguments.unshift(this);
-  //         bean[method].apply(arguments);
-  //       };
-  //     });
-  //
-  // Minified Bean is 10.052kb, so no biggie.
+
+  // Delegate the event handler methods to bean.
+  _.each(['on', 'one', 'off', 'fire'], function (method) {
+    PokeyService.prototype[method] = function () {
+      Array.prototype.unshift.call(arguments, this);
+      bean[method].apply(undefined, arguments);
+    };
+  });
 
   PokeyService.prototype.register = function (name) {
     var req = {
@@ -78,26 +92,6 @@ define([
 
   PokeyService.prototype.isRegistered = function () {
     return this.username !== undefined;
-  };
-
-  /**
-   * Set up event handlers for Pokey events. Currently just acts as a go-between for the socket.
-   *
-   * @param {string} event
-   * @param {function} callback
-   */
-  PokeyService.prototype.on = function (event, callback) {
-    if (_.isFunction(callback)) {
-      this.socket.on(event, function () {
-        callback.apply(arguments);
-      });
-    } else {
-      console.log('Ignoring attempt to add event handler with a non-function callback.');
-    }
-  };
-
-  PokeyService.prototype.off = function (event, callback) {
-    this.socket.removeListener(event, callback);
   };
 
   return PokeyService;
