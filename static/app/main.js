@@ -7,7 +7,9 @@ require.config({
     bootstrap: '../lib/bootstrap/dist/js/bootstrap',
     highcharts: 'http://code.highcharts.com/highcharts',
     jquery: '../lib/jquery/jquery',
-    socketio: '../lib/socket.io-client/dist/socket.io'
+    q: '../lib/q/q',
+    socketio: '../lib/socket.io-client/dist/socket.io',
+    underscore: '../lib/underscore/underscore'
   },
   shim: {
     'angular': {
@@ -22,8 +24,14 @@ require.config({
     'highcharts': {
       deps: ['jquery']
     },
+    'q': {
+      exports: 'Q'
+    },
     'socketio': {
       exports: 'io'
+    },
+    'underscore': {
+      exports: '_'
     }
   }
 });

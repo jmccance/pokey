@@ -1,4 +1,10 @@
-define(function() {
+define([
+  'q',
+  'underscore'
+], function (
+    q,
+    _
+    ) {
   'use strict';
 
   var PokeyService = function (sessionId, socket) {
@@ -26,7 +32,7 @@ define(function() {
     this.socket.emit('register', req);
   };
 
-  PokeyService.prototype.createRoom = function() {
+  PokeyService.prototype.createRoom = function () {
     this.socket.emit('createRoom');
   };
 
@@ -50,6 +56,26 @@ define(function() {
 
   PokeyService.prototype.clearEstimates = function () {
     this.socket.emit('clearEstimates');
+  };
+
+  /**
+   * Set up event handlers for Pokey events. Currently just acts as a go-between for the socket.
+   *
+   * @param {string} event
+   * @param {function} callback
+   */
+  PokeyService.prototype.on = function (event, callback) {
+    if (_.isFunction(callback)) {
+      this.socket.on(event, function () {
+        callback.apply(arguments);
+      });
+    } else {
+      console.log('Ignoring attempt to add event handler with a non-function callback.');
+    }
+  };
+
+  PokeyService.prototype.off = function (event, callback) {
+    this.socket.removeListener(event, callback);
   };
 
   return PokeyService;

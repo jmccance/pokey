@@ -5,9 +5,14 @@ define(function () {
     // See: http://stackoverflow.com/questions/18716113/scope-issue-in-angularjs-using-angularui-bootstrap-modal
     $scope.dialog = {};
 
-    $scope.register = function () {
-      pokeyService.register($scope.dialog.username);
+    var closeDialog = function() {
       $modalInstance.close();
+      pokeyService.off('registered', closeDialog);
+    };
+
+    $scope.register = function () {
+      pokeyService.on('registered', closeDialog);
+      pokeyService.register($scope.dialog.username);
     };
   };
 
