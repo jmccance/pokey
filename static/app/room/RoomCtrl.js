@@ -73,6 +73,7 @@ define([
         pokeyService.clearEstimates();
       };
 
+      // TODO Buttons do not display for owner when navigating from lobby.
       $scope.isOwner = function () {
         return $scope.room
             && $scope.room.owner
