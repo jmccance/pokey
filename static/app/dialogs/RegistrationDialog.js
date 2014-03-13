@@ -22,7 +22,7 @@ define(function () {
     var self = this;
     this.$modal
         .open({
-          templateUrl: 'app/registrationDialog/registrationDialog.html',
+          templateUrl: 'app/dialogs/registrationDialog.html',
           controller: RegistrationCtrl,
           resolve: {
             pokeyService: function () { return self.pokeyService; }
