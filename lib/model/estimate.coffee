@@ -4,6 +4,18 @@
 # min and max hours to communicate a range.
 class Estimate
 
+  # TODO Consider concept of an empty estimate to make this less painful.
+
+  @toCensoredObject: (isRevealed, estimate) ->
+    if !estimate?
+      null
+    else if isRevealed
+      hours: estimate.hours
+      comment: estimate.comment
+    else
+      {}
+
+
   @valueOf: (obj) ->
     obj || (obj = {})
     new Estimate(obj.hours, obj.comment)

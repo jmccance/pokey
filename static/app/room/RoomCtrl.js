@@ -16,6 +16,7 @@ define([
         registrationDialog
         ) {
       var roomId = $routeParams.roomId;
+      $scope.estimate = {};
 
       pokeyService.on('roomUpdated', function (room) {
         $scope.$apply(function () {
@@ -36,15 +37,14 @@ define([
       /**
        * Submit the current estimate.
        */
-      $scope.estimate = function () {
+      $scope.submitEstimate = function () {
         pokeyService.submitEstimate($scope.estimate);
       };
 
       /**
        * Reveals the estimates and renders the chart.
        */
-      $scope.reveal = function () {
-        console.log('Revealing estimates');
+      $scope.revealEstimates = function () {
         pokeyService.showEstimates();
 
         // TODO Implement an EstimationChart abstraction layer.
@@ -81,7 +81,7 @@ define([
       /**
        * Clear existing estimates. Must be the room owner in order to do so.
        */
-      $scope.clear = function () {
+      $scope.clearEstimates = function () {
         pokeyService.clearEstimates();
       };
     }

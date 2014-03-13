@@ -1,3 +1,5 @@
+Estimate = require './estimate'
+
 class Room
   @nextId = 0
   @rooms = {}
@@ -55,6 +57,7 @@ class Room
   # Unset everyone's estimates.
   clearEstimates: ->
     console.log('Room #{@id}: Clearing estimates')
+    @isRevealed = false
     for id, user of @members
       user.estimate = null
 
@@ -67,14 +70,13 @@ class Room
       id: @id
       owner: @owner
       isRevealed: @isRevealed
-      members: @members
+      members: {}
 
-    # Function to censor an estimate. Unsubmitted estimates are null, submitted estimates are an
-    # empty object: truthy, but unrevealing.
-    censored = (estimate) -> if estimate? then {} else null
-
-    for userId, value of clone.members
-      value.estimate = if @isRevealed then value.estimate else censored(value.estimate)
+    for userId, user of @members
+      clone.members[userId] =
+        id: user.id
+        name: user.name
+        estimate: Estimate.toCensoredObject(@isRevealed, user.estimate)
 
     return clone
 

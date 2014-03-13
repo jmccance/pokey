@@ -75,6 +75,7 @@ define([
   };
 
   PokeyService.prototype.submitEstimate = function (estimate) {
+    console.log('Submitting estimate', estimate);
     this.socket.emit('submitEstimate', estimate);
   };
 

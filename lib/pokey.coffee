@@ -106,6 +106,8 @@ class Pokey
         room = getRoom(socket)
         estimate = Estimate.valueOf(estimate)
 
+        console.log("Room #{room.id} received estimate from User #{user.id}:", estimate)
+
         # Set the user's estimate in this room.
         # If this changed the user's estimate, broadcast that to everyone else.
         if room.setEstimate(user, estimate)
