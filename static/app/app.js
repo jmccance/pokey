@@ -32,11 +32,11 @@ define([
         function ($routeProvider) {
           $routeProvider.
               when('/', {
-                templateUrl: 'views/lobby.html',
+                templateUrl: 'app/lobby/lobby.html',
                 controller: 'LobbyCtrl'
               }).
               when('/room/:roomId', {
-                templateUrl: 'views/room.html',
+                templateUrl: 'app/room/room.html',
                 controller: 'RoomCtrl'
               });
         }])
