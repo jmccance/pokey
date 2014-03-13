@@ -13,7 +13,11 @@ define([], function () {
         registrationDialog
         ) {
       if (!pokeyService.isRegistered()) {
-        registrationDialog.show();
+        if (pokeyService.isUsernameCached()) {
+          pokeyService.register();
+        } else {
+          registrationDialog.show();
+        }
       }
 
       // Handle room creation
