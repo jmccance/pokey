@@ -21,7 +21,7 @@ define([
         registrationDialog
         ) {
       var roomId = $routeParams.roomId,
-          histogram = new EstimateHistogram($('[data-node-name="chart"]'));
+          histogram = null;
 
       $scope.estimate = {};
 
@@ -39,7 +39,9 @@ define([
 
       if (!pokeyService.isRegistered()) {
         pokeyService.on('registered', function () {
+          $scope.user = pokeyService.getUser();
           pokeyService.joinRoom(roomId);
+          histogram = new EstimateHistogram($('[data-node-name="chart"]'));
         });
 
         registrationDialog.show();
@@ -66,6 +68,10 @@ define([
        */
       $scope.clearEstimates = function () {
         pokeyService.clearEstimates();
+      };
+
+      $scope.isOwner = function () {
+        return $scope.user.id === $scope.room.owner.id;
       };
     }
   ];

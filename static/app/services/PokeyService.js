@@ -14,11 +14,11 @@ define([
 
     this.socket = socket;
     this.sessionId = sessionId;
-    this.username = undefined;
+    this.user = undefined;
 
     socket.on('registered', function (user) {
       console.log('Registered', user);
-      self.username = user.name;
+      self.user = user;
       self.fire('registered', user);
     });
 
@@ -92,7 +92,11 @@ define([
   };
 
   PokeyService.prototype.isRegistered = function () {
-    return this.username !== undefined;
+    return this.user !== undefined;
+  };
+
+  PokeyService.prototype.getUser = function () {
+    return this.user;
   };
 
   return PokeyService;
