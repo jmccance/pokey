@@ -1,40 +1,47 @@
-<div class="page-header">
-    <h1>Pokey</h1>
-</div>
-
 <div class="row">
-    <form class="form-horizontal" data-role="form">
-        <div class="form-group">
-            <label class="control-label col-sm-1" for="estimate">
-                Estimate
-            </label>
+    <form class="form-inline" data-role="form">
+        <label class="control-label col-md-1" for="estimate">
+            Estimate
+        </label>
 
-            <div class="col-sm-2">
-                <input id="estimate"
-                       type="number"
-                       pattern="\d*"
-                       min="0"
-                       step="1"
-                       class="form-control"
-                       data-ng-model="estimate.hours"/>
+        <div class="form-group col-md-1">
+            <input id="estimate"
+                   type="number"
+                   pattern="\d*"
+                   min="1"
+                   max="12"
+                   step="1"
+                   class="form-control"
+                   data-ng-model="estimate.hours"/>
+        </div>
+        <label class="control-label col-md-1" for="comment">
+            Comment
+        </label>
+
+        <div class="form-group col-md-6">
+            <input id="comment"
+                   type="text"
+                   maxlength="255"
+                   class="form-control"
+                   data-ng-model="estimate.comment"/>
+        </div>
+        <div class="btn-toolbar col-md-3" data-role="toolbar">
+            <div class="btn-group">
+                <button data-ng-click="submitEstimate()" class="btn btn-primary">Submit</button>
             </div>
-            <div class="col-sm-3">
-                <div class="btn-toolbar" data-role="toolbar">
-                    <div class="btn-group">
-                        <button data-ng-click="submitEstimate()" class="btn btn-primary">Submit</button>
-                    </div>
-                    <div class="btn-group" data-ng-show="isOwner()">
-                        <button data-ng-click="revealEstimates()" class="btn btn-info">Reveal</button>
-                        <button data-ng-click="clearEstimates()" class="btn btn-warning">Clear</button>
-                    </div>
-                </div>
+            <div class="btn-group" data-ng-show="isOwner()">
+                <button data-ng-click="revealEstimates()" class="btn btn-info">Reveal</button>
+                <button data-ng-click="clearEstimates()" class="btn btn-warning">Clear</button>
             </div>
         </div>
     </form>
 </div>
 
+<!-- TODO Do the CSS properly. -->
+<div class="row">&nbsp;</div>
+
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-5">
         <table class="table table-striped">
             <tr>
                 <th>User</th>
@@ -44,13 +51,14 @@
             <tr data-ng-repeat="(id, user) in room.members">
                 <td>{{user.name}}</td>
                 <td>
-                    <span data-ng-show="user.estimate && !user.estimate.hours">Submitted</span>
+                    <span data-ng-show="user.estimate && !user.estimate.hours"><span
+                            class="glyphicon glyphicon-ok text-success"></span></span>
                     <span data-ng-show="user.estimate.hours">{{user.estimate.hours}}</span>
                 </td>
             </tr>
         </table>
     </div>
 
-    <div data-node-name="chart" class="col-md-6">
+    <div data-node-name="chart" class="col-md-7">
     </div>
 </div>
