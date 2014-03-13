@@ -26,7 +26,8 @@ require.config({
       deps: ['jquery']
     },
     highcharts: {
-      deps: ['jquery']
+      deps: ['jquery'],
+      exports: 'Highcharts'
     },
     Q: {
       exports: 'Q'

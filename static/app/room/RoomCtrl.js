@@ -31,9 +31,9 @@ define([
         });
 
         if (room.isRevealed) {
-          histogram.show(room);
+          histogram.update(room);
         } else {
-          histogram.hide();
+          histogram.clear();
         }
       });
 
