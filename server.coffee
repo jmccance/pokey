@@ -8,6 +8,9 @@ app = express()
 server = http.createServer(app)
 io = socketio.listen(server)
 
+# This is awful, but also temporary.
+getRandomId = -> Math.floor(Math.random() * new Date().getTime())
+
 app
   .use(express.logger())
   .use(express.cookieParser())
@@ -17,6 +20,10 @@ app
     cookie:
       httpOnly: false
   ))
+  .use((req, res, next) ->
+    req.session.id = getRandomId() unless req.session.id?
+    next()
+  )
   .use(express.static(__dirname + '/static'))
 
 io.configure 'development', ->
