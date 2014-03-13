@@ -18,7 +18,6 @@ define([
       var roomId = $routeParams.roomId;
 
       pokeyService.on('roomUpdated', function (room) {
-        console.log('roomUpdated', room);
         $scope.$apply(function () {
           $scope.room = room;
         });
@@ -38,8 +37,7 @@ define([
        * Submit the current estimate.
        */
       $scope.estimate = function () {
-        console.log('Submitting estimate');
-        pokeyService.submitEstimate({});
+        pokeyService.submitEstimate($scope.estimate);
       };
 
       /**

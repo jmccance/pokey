@@ -15,7 +15,8 @@
                        pattern="\d*"
                        min="0"
                        step="1"
-                       class="form-control"/>
+                       class="form-control"
+                       data-ng-model="estimate.hours"/>
             </div>
             <div class="col-sm-3">
                 <div class="btn-toolbar" data-role="toolbar">
@@ -42,7 +43,10 @@
 
             <tr data-ng-repeat="(id, user) in room.members">
                 <td>{{user.name}}</td>
-                <td>{{user.estimate}}</td>
+                <td>
+                    <span data-ng-show="user.estimate && !user.estimate.hours">Submitted</span>
+                    <span data-ng-show="user.estimate.hours">{{user.estimate.hours}}</span>
+                </td>
             </tr>
         </table>
     </div>

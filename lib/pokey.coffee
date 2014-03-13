@@ -1,3 +1,4 @@
+Estimate = require './model/estimate'
 Room = require './model/room'
 User = require './model/user'
 
@@ -10,9 +11,9 @@ class Pokey
   constructor: (sockets) ->
     @_sessions = {}
 
-    getValue = (socket, value) ->
+    getValue = (socket, key) ->
       value = null
-      socket.get('user', (err, _value) =>
+      socket.get(key, (err, _value) =>
         value = _value
       )
       return value
@@ -103,6 +104,7 @@ class Pokey
         # Get and validate the user and current room from the socket.
         user = getUser(socket)
         room = getRoom(socket)
+        estimate = Estimate.valueOf(estimate)
 
         # Set the user's estimate in this room.
         # If this changed the user's estimate, broadcast that to everyone else.

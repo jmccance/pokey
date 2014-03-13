@@ -3,10 +3,17 @@
 # of a number of hours and an optional comment. In the future, may include a
 # min and max hours to communicate a range.
 class Estimate
+
+  @valueOf: (obj) ->
+    obj || (obj = {})
+    new Estimate(obj.hours, obj.comment)
+
   constructor: (@hours, @comment) ->
 
   # Semantic equality test.
-  equals: (that) ->
-    @hours = that.hours && @comment == that.comment
+  equals: (foo, bar) ->
+    foo = (foo || {})
+    bar = (bar || {})
+    foo.hours = bar.hours && foo.comment == bar.comment
 
 module.exports = Estimate
