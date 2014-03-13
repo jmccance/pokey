@@ -15,6 +15,8 @@ class User
 
   @delete: (id) -> delete @users[id]
 
-  constructor: (@name) -> @id = null
+  constructor: (@name) ->
+    @id = null
+    @estimate = null
 
 module.exports = User

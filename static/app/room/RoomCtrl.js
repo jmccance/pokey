@@ -17,33 +17,22 @@ define([
         ) {
       var roomId = $routeParams.roomId;
 
-      // TODO Implement correct workflow.
-      // 1. Register user if not already registered.
-      // 2. After registration, join room.
-      // 3. Once the room is received, set up a listener for room updates.
+      pokeyService.on('roomUpdated', function (room) {
+        console.log('roomUpdated', room);
+        $scope.$apply(function () {
+          $scope.room = room;
+        });
+      });
 
       if (!pokeyService.isRegistered()) {
         pokeyService.on('registered', function () {
           pokeyService.joinRoom(roomId);
         });
-        
-        registrationDialog.show();
-      }
 
-      $scope.users = [
-        {
-          name: 'John',
-          estimate: 2
-        },
-        {
-          name: 'Jakob',
-          estimate: 3
-        },
-        {
-          name: 'Jingle',
-          estimate: 5
-        }
-      ];
+        registrationDialog.show();
+      } else {
+        pokeyService.joinRoom(roomId);
+      }
 
       /**
        * Submit the current estimate.

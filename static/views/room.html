@@ -40,7 +40,7 @@
                 <th>Estimate</th>
             </tr>
 
-            <tr data-ng-repeat="user in users">
+            <tr data-ng-repeat="(id, user) in room.members">
                 <td>{{user.name}}</td>
                 <td>{{user.estimate}}</td>
             </tr>

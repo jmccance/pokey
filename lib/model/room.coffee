@@ -7,6 +7,7 @@ class Room
     id = room.id = @nextId
     @rooms[id] = room
     @nextId += 1
+    console.log('Adding room', room)
     return room
 
   @get: (id) -> @rooms[id]
@@ -16,10 +17,7 @@ class Room
   @delete: (id) -> delete @rooms[id]
 
   constructor: (@owner) ->
-    # Map of user IDs to estimates. Estimates are null if not submitted yet.
     @id = null
-
-    # Users and their estimates are stored as a Map.<userId, {user: User, estimate: Estimate}>.
     @members = {}
     @isRevealed = false
 
@@ -30,16 +28,15 @@ class Room
   ##
   # Add the specified user to the room. No-op if a user with that ID is already in the room.
   addUser: (user) ->
-    if !@members[user.id]?
-      @members[user.id] =
-        user: user
-        estimate: null
+    console.log('Adding user', user)
+    @members[user.id] = user unless @members[user.id]?
 
   ##
   # Remove a user from the room.
   #
   # @returns {boolean} true iff a user was removed
   removeUser: (user) ->
+    console.log('Removing user', user)
     isMember = @contains(user)
     delete @members[user.id]
     return isMember
@@ -49,14 +46,17 @@ class Room
   #
   # @returns {boolean} true iff the estimate changed
   setEstimate: (user, estimate) ->
-    isEstimateIdentical = (estimate.equals(@members[user.id].estimate))
+    isEstimateChanging = !(estimate.equals(@members[user.id].estimate))
     @members[user.id].estimate = estimate
 
-    return !isEstimateIdentical
+    return isEstimateChanging
 
   ##
   # Unset everyone's estimates.
-  clearEstimates: -> @members[userId].estimate = null for userId of @members
+  clearEstimates: ->
+    console.log('Room #{@id}: Clearing estimates')
+    for id, user of @members
+      user.estimate = null
 
   ##
   # Serialize the room. Hides everyone's estimates if they have not been revealed yet.
@@ -67,16 +67,14 @@ class Room
       id: @id
       owner: @owner
       isRevealed: @isRevealed
-      members: {}
+      members: @members
 
     # Function to censor an estimate. Unsubmitted estimates are null, submitted estimates are an
     # empty object: truthy, but unrevealing.
     censored = (estimate) -> if estimate? then {} else null
 
-    for userId, value of @members
-      clone[userId] =
-        user: value.user
-        estimate: if @isRevealed then value.estimate else censored(value.estimate)
+    for userId, value of clone.members
+      value.estimate = if @isRevealed then value.estimate else censored(value.estimate)
 
     return clone
 
