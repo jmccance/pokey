@@ -159,4 +159,13 @@ class Pokey
           room.clearEstimates()
           sockets.in(room.id).emit('roomUpdated', room.sanitized())
 
+      socket.on 'disconnect', =>
+        user = getUser(socket)
+        room = getRoom(socket)
+
+        if user? and room?
+          console.log("Removing User #{user.id} from Room #{room.id}")
+          room.removeUser(user)
+          sockets.in(room.id).emit('roomUpdated', room.sanitized())
+
 module.exports = Pokey
