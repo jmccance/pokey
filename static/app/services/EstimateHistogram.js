@@ -7,14 +7,14 @@ define([
     ) {
   'use strict';
 
-  var EstimateHistogram = function ($el) {
-    this.$el = $el;
-    console.log("Highcharts?", Highcharts);
+  var MIN_HOURS = 1,
+      MAX_HOURS = 12;
 
+  var EstimateHistogram = function ($el) {
     this.chart = new Highcharts.Chart({
       chart: {
         type: 'column',
-        renderTo: this.$el[0]
+        renderTo: $el[0]
       },
       title: {
         text: null
@@ -45,7 +45,7 @@ define([
   EstimateHistogram.prototype.update = function (room) {
     var tally = _.chain(room.members)
         .countBy(function (member) {
-          if (!_.isUndefined(member.estimate)) {
+          if (member.estimate) {
             return member.estimate.hours;
           }
         })
@@ -69,7 +69,7 @@ define([
 
   EstimateHistogram.prototype._getDefaultCategories = function () {
     var categories = [];
-    for (var i = 1; i <= 12; ++i) {
+    for (var i = MIN_HOURS; i <= MAX_HOURS; ++i) {
       categories.push(i + 'h');
     }
     return categories;
@@ -77,7 +77,7 @@ define([
 
   EstimateHistogram.prototype._getDefaultData = function () {
     var data = [];
-    for (var i = 1; i <= 12; ++i) {
+    for (var i = MIN_HOURS; i <= MAX_HOURS; ++i) {
       data.push(0);
     }
     return data;
