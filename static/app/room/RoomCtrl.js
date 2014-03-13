@@ -44,7 +44,11 @@ define([
           histogram = new EstimateHistogram($('[data-node-name="chart"]'));
         });
 
-        registrationDialog.show();
+        if (pokeyService.isUsernameCached()) {
+          pokeyService.register();
+        } else {
+          registrationDialog.show();
+        }
       } else {
         pokeyService.joinRoom(roomId);
       }
@@ -71,7 +75,7 @@ define([
       };
 
       $scope.isOwner = function () {
-        return $scope.user.id === $scope.room.owner.id;
+        return $scope.room && $scope.user.id === $scope.room.owner.id;
       };
     }
   ];

@@ -56,6 +56,7 @@ define([
       })
 
       .service('pokeyService', [
+        '$cookies',
         'sessionId',
         'socket',
         PokeyService

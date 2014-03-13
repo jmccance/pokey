@@ -9,16 +9,18 @@ define([
     ) {
   'use strict';
 
-  var PokeyService = function (sessionId, socket) {
+  var PokeyService = function ($cookies, sessionId, socket) {
     var self = this;
 
     this.socket = socket;
     this.sessionId = sessionId;
     this.user = undefined;
+    this.$cookies = $cookies;
 
     socket.on('registered', function (user) {
       console.log('Registered:', user);
       self.user = user;
+      $cookies['pokey.user.name'] = user.name;
       self.fire('registered', user);
     });
 
@@ -39,7 +41,12 @@ define([
     };
   });
 
+  /**
+   * @param {string} [name]
+   */
   PokeyService.prototype.register = function (name) {
+    name || (name = this._getCachedUsername());
+
     var req = {
       sessionId: this.sessionId,
       name: name
@@ -82,6 +89,14 @@ define([
   PokeyService.prototype.isRegistered = function () {
     return this.user !== undefined;
   };
+
+  PokeyService.prototype.isUsernameCached = function () {
+    return !!this._getCachedUsername();
+  };
+
+  PokeyService.prototype._getCachedUsername = function () {
+    return this.$cookies['pokey.user.name'];
+  }
 
   PokeyService.prototype.getUser = function () {
     return this.user;
