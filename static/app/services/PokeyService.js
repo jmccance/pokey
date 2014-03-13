@@ -17,7 +17,7 @@ define([
     this.user = undefined;
 
     socket.on('registered', function (user) {
-      console.log('Registered', user);
+      console.log('Registered:', user);
       self.user = user;
       self.fire('registered', user);
     });
@@ -30,18 +30,6 @@ define([
       self.fire('roomUpdated', room);
     })
   };
-
-  // API Calls ////////////////////////
-
-  // TODO Implement promise-based API.
-  // Call-and-response calls should return a promise. These methods include register, joinRoom, createRoom. "Command"
-  // messages like "clearEstimates" or "submitEstimate" don't need this.
-  //
-  // Q supports a timeout, so if we don't get back the expected event within a certain interval we can fail the
-  // request. Note that the timeout method is on the promise, so we'll return something like
-  //
-  //     deferred.promise.timeout(TIMEOUT)
-
 
   // Delegate the event handler methods to bean.
   _.each(['on', 'one', 'off', 'fire'], function (method) {
@@ -57,7 +45,7 @@ define([
       name: name
     };
 
-    console.log('Registering', req);
+    console.log('Registering:', req);
     this.socket.emit('register', req);
   };
 
@@ -75,7 +63,7 @@ define([
   };
 
   PokeyService.prototype.submitEstimate = function (estimate) {
-    console.log('Submitting estimate', estimate);
+    console.log('Submitting estimate:', estimate);
     this.socket.emit('submitEstimate', estimate);
   };
 
