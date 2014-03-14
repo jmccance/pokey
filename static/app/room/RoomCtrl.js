@@ -24,10 +24,13 @@ define([
           histogram = new EstimateHistogram($('[data-node-name="chart"]'));
 
       $scope.estimate = {};
+      $scope.user = pokeyService.getUser();
+      $scope.isOwner = false;
 
       pokeyService.on('roomUpdated', function (room) {
         $scope.$apply(function () {
           $scope.room = room;
+          $scope.isOwner = room.owner.id === $scope.user.id;
         });
 
         if (room.isRevealed) {
