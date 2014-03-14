@@ -119,6 +119,10 @@ class Pokey
           socket.emit('error', 'not a member of a room')
           return
 
+        unless estimate.isValid()
+          socket.emit('error', 'estimate invalid')
+          return
+
         console.log("Room #{room.id} received estimate from User #{user.id}:", estimate)
 
         # Set the user's estimate in this room.

@@ -28,4 +28,8 @@ class Estimate
     bar = (bar || {})
     foo.hours = bar.hours && foo.comment == bar.comment
 
+  ##
+  # An estimate is valid if either the hours is set or the comment has anything in it other than whitespace.
+  isValid: -> @hours?
+
 module.exports = Estimate
