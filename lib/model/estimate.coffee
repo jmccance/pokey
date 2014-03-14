@@ -4,6 +4,8 @@
 # min and max hours to communicate a range.
 class Estimate
 
+  @MAX_COMMENT_LEN = 255
+
   # TODO Consider concept of an empty estimate to make this less painful.
 
   @toCensoredObject: (isRevealed, estimate) ->
@@ -11,7 +13,7 @@ class Estimate
       null
     else if isRevealed
       hours: estimate.hours
-      comment: estimate.comment
+      comment: estimate.comment[0..Estimate.MAX_COMMENT_LEN]
     else
       {}
 
