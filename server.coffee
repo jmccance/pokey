@@ -29,7 +29,7 @@ app
 io.configure 'development', ->
   io.set 'transports', ['websocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']
 
-pokey = new Pokey(io.sockets)
+pokey = new Pokey(app, io.sockets)
 
 server.listen 8088, ->
   address = server.address()

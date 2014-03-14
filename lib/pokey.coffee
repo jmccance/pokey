@@ -8,7 +8,7 @@ User = require './model/user'
 class Pokey
   ##
   # Configure the provided socket.io server with the Pokey API.
-  constructor: (sockets) ->
+  constructor: (app, sockets) ->
     @_sessions = {}
 
     getValue = (socket, key) ->
@@ -20,6 +20,11 @@ class Pokey
 
     getUser = (socket) -> getValue(socket, 'user')
     getRoom = (socket) -> getValue(socket, 'room')
+
+    app.get '/stats', (req, res) =>
+      res.json
+        rooms: Room.all()
+        users: User.all()
 
     sockets.on 'connection', (socket) =>
       ##
