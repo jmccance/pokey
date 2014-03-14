@@ -30,6 +30,6 @@ class Estimate
 
   ##
   # An estimate is valid if either the hours is set or the comment has anything in it other than whitespace.
-  isValid: -> @hours?
+  isValid: -> @hours? or (@comment? and /.*\w.*/.test(@comment))
 
 module.exports = Estimate

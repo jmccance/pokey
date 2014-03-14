@@ -187,7 +187,7 @@ class Pokey
 
         if !user?
           socket.emit('error', 'not yet registered')
-        return
+          return
 
         if !room?
           socket.emit('error', 'not a member of a room')

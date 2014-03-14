@@ -73,6 +73,8 @@ define([
        * Clear existing estimates. Must be the room owner in order to do so.
        */
       $scope.clearEstimates = function () {
+        $scope.estimate.hours = null;
+        $scope.estimate.comment = null;
         pokeyService.clearEstimates();
       };
 
