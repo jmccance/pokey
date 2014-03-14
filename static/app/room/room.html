@@ -46,6 +46,7 @@
             <tr>
                 <th>User</th>
                 <th>Estimate</th>
+                <th>Comment</th>
             </tr>
 
             <tr data-ng-repeat="(id, user) in room.members">
@@ -53,7 +54,10 @@
                 <td>
                     <span data-ng-show="user.estimate && !user.estimate.hours"><span
                             class="glyphicon glyphicon-ok text-success"></span></span>
-                    <span data-ng-show="user.estimate.hours">{{user.estimate.hours}}</span>
+                    <span data-ng-show="user.estimate.hours">{{user.estimate.hours}}h</span>
+                </td>
+                <td>
+                    <span data-ng-show="/.*\w.*/.test(user.estimate.comment)">{{user.estimate.comment}}</span>
                 </td>
             </tr>
         </table>
