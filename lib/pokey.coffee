@@ -111,6 +111,14 @@ class Pokey
         room = getRoom(socket)
         estimate = Estimate.valueOf(estimate)
 
+        if !user?
+          socket.emit('error', 'not yet registered')
+          return
+
+        if !room?
+          socket.emit('error', 'not a member of a room')
+          return
+
         console.log("Room #{room.id} received estimate from User #{user.id}:", estimate)
 
         # Set the user's estimate in this room.
@@ -124,6 +132,14 @@ class Pokey
         # Get the user and current room from the socket
         user = getUser(socket)
         room = getRoom(socket)
+
+        if !user?
+          socket.emit('error', 'not yet registered')
+          return
+
+        if !room?
+          socket.emit('error', 'not a member of a room')
+          return
 
         # Verify that the user owns the room.
         # Toggle the estimate visibility to visible.
@@ -141,6 +157,14 @@ class Pokey
         user = getUser(socket)
         room = getRoom(socket)
 
+        if !user?
+          socket.emit('error', 'not yet registered')
+        return
+
+        if !room?
+          socket.emit('error', 'not a member of a room')
+          return
+
         # Verify that the user owns the room.
         # Toggle the estimate visibility to concealed.
         # Update everyone about the new room state.
@@ -156,6 +180,14 @@ class Pokey
         # Get the user and current room from the socket
         user = getUser(socket)
         room = getRoom(socket)
+
+        if !user?
+          socket.emit('error', 'not yet registered')
+        return
+
+        if !room?
+          socket.emit('error', 'not a member of a room')
+          return
 
         # Verify that the user owns the room.
         # Clear the room estimates.
