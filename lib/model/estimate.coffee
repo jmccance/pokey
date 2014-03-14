@@ -12,8 +12,8 @@ class Estimate
     if !estimate?
       null
     else if isRevealed
-      hours: estimate.hours
-      comment: estimate.comment[0..Estimate.MAX_COMMENT_LEN]
+      hours: estimate?.hours
+      comment: estimate?.comment?[0..Estimate.MAX_COMMENT_LEN]
     else
       {}
 
