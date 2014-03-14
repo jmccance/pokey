@@ -26,8 +26,7 @@ class Pokey
       # @param {string} req.name - the name to register for this user
       socket.on 'register', (req) =>
         sessionId = req.sessionId
-        console.log(@_sessions)
-        user = 
+        user =
           if !@_sessions[sessionId]?
             @_sessions[sessionId] = User.add(new User())
           else
@@ -45,7 +44,7 @@ class Pokey
       # @param {string} req.roomName - the name to give the room
       socket.on 'createRoom', =>
         socket.get 'user', (error, user) =>
-          if error?
+          if error? or !user?
             socket.emit('error', 'could not get user for socket', error)
             return
 
@@ -64,7 +63,7 @@ class Pokey
       # @param {string} req.roomId - the ID of the room to join
       socket.on 'joinRoom', (req) =>
         socket.get 'user', (error, user) =>
-          if error?
+          if error? or !user?
             socket.emit('error', 'must register before joining a room')
             return
 
@@ -92,13 +91,13 @@ class Pokey
       # @param {Estimate} estimate
       socket.on 'submitEstimate', (estimate) =>
         socket.get 'user', (error, user) =>
-          if error?
-            socket.emit('error', 'could not associate user with socket')
+          if error? or !user?
+            socket.emit('error', 'could not associate user with user')
             return
 
           socket.get 'room', (error, room) =>
-            if error?
-              socket.emit('error', 'could not associate room with socket')
+            if error? or !room?
+              socket.emit('error', 'could not associate room with user')
               return
 
             estimate = Estimate.valueOf(estimate)
@@ -118,13 +117,13 @@ class Pokey
       # Reveal estimates to members of the room.
       socket.on 'showEstimates', =>
         socket.get 'user', (error, user) =>
-          if error?
-            socket.emit('error', 'could not associate user with socket')
+          if error? or !user?
+            socket.emit('error', 'could not associate user with user')
             return
 
           socket.get 'room', (error, room) =>
-            if error?
-              socket.emit('error', 'could not associate room with socket')
+            if error? or !room?
+              socket.emit('error', 'could not associate room with user')
               return
 
             # Verify that the user owns the room.
@@ -140,13 +139,13 @@ class Pokey
       # logging enabled. Included for completeness, I guess?
       socket.on 'hideEstimates', =>
         socket.get 'user', (error, user) =>
-          if error?
-            socket.emit('error', 'could not asssociate user with socket')
+          if error? or !user?
+            socket.emit('error', 'could not associate user with user')
             return
 
           socket.get 'room', (error, room) =>
-            if error?
-              socket.emit('error', 'could not associate room with socket')
+            if error? or !room?
+              socket.emit('error', 'could not associate room with user')
               return
 
             # Verify that the user owns the room.
@@ -162,12 +161,12 @@ class Pokey
       # Clear the current estimates.
       socket.on 'clearEstimates', =>
         socket.get 'user', (error, user) =>
-          if error?
+          if error? or !user?
             socket.emit('error', 'could not associate user with user')
             return
 
           socket.get 'room', (error, room) =>
-            if error?
+            if error? or !room?
               socket.emit('error', 'could not associate room with user')
               return
 
@@ -180,16 +179,16 @@ class Pokey
 
       socket.on 'disconnect', =>
         socket.get 'user', (error, user) =>
-          if error?
+          if error? or !user?
             socket.emit('error', 'could not associate user with user')
             return
 
           socket.get 'room', (error, room) =>
-            if error?
+            if error? or !room?
               socket.emit('error', 'could not associate room with user')
               return
 
-            console.log("Removing User #{user.id} from Room #{room.id}")
+            console.log("Removing User #{user?.id} from Room #{room?.id}")
             room.removeUser(user)
             sockets.in(room.id).emit('roomUpdated', room.sanitized())
 
