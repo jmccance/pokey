@@ -80,10 +80,10 @@ define([
 
       // TODO Buttons do not display for owner when navigating from lobby.
       $scope.isOwner = function () {
-        return $scope.room
-            && $scope.room.owner
-            && $scope.user
-            && $scope.user.id === $scope.room.owner.id;
+        return $scope.room &&
+            $scope.room.owner &&
+            $scope.user &&
+            $scope.user.id === $scope.room.owner.id;
       };
     }
   ];

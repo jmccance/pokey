@@ -27,10 +27,11 @@ define([
     socket.on('roomCreated', function (room) {
       console.log('roomCreated:', room);
       self.fire('roomCreated', room);
-    } )
+    });
+
     socket.on('roomUpdated', function (room) {
       self.fire('roomUpdated', room);
-    })
+    });
   };
 
   // Delegate the event handler methods to bean.
@@ -45,7 +46,7 @@ define([
    * @param {string} [name]
    */
   PokeyService.prototype.register = function (name) {
-    name || (name = this._getCachedUsername());
+    name = name || this._getCachedUsername();
 
     var req = {
       sessionId: this.sessionId,
@@ -96,7 +97,7 @@ define([
 
   PokeyService.prototype._getCachedUsername = function () {
     return this.$cookies['pokey.user.name'];
-  }
+  };
 
   PokeyService.prototype.getUser = function () {
     return this.user;
