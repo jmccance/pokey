@@ -12,7 +12,6 @@
     "socket.io": "0.9.15",
     "coffee-script": "~1.7.1"
   },
-  "engine": "node >= 0.10.x",
   "subdomain": "pokey",
   "scripts": {
     "start": "./node_modules/.bin/coffee server.coffee"
