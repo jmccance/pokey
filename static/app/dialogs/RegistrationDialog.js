@@ -4,7 +4,8 @@ define(function () {
     // quite what's going on here.
     // See: http://stackoverflow.com/questions/18716113/scope-issue-in-angularjs-using-angularui-bootstrap-modal
     $scope.dialog = {};
-    $scope.dialog.username = pokeyService.getUser().name;
+    var user = pokeyService.getUser();
+    $scope.dialog.username = user ? user.name : '';
 
     $scope.register = function () {
       pokeyService.one('registered', function() {
