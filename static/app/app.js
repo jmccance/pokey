@@ -4,6 +4,7 @@ define([
 
   'dialogs/RegistrationDialog',
   'lobby/LobbyCtrl',
+  'navbar/NavBarCtrl',
   'room/RoomCtrl',
   'services/PokeyService',
 
@@ -16,6 +17,7 @@ define([
     socketio,
     RegistrationDialog,
     LobbyCtrl,
+    NavBarCtrl,
     RoomCtrl,
     PokeyService
     ) {
@@ -43,6 +45,7 @@ define([
 
       .controller('LobbyCtrl', LobbyCtrl)
       .controller('RoomCtrl', RoomCtrl)
+      .controller('NavBarCtrl', NavBarCtrl)
 
       .factory('sessionId', [
           '$cookies',
