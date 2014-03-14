@@ -21,7 +21,7 @@ define([
         registrationDialog
         ) {
       var roomId = $routeParams.roomId,
-          histogram = new EstimateHistogram($('[data-node-name="chart"]'));;
+          histogram = new EstimateHistogram($('[data-node-name="chart"]'));
 
       $scope.estimate = {};
 
