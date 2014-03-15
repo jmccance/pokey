@@ -1,7 +1,6 @@
 ##
-# An estimate of how long the task at hand will take. Currently consists only
-# of a number of hours and an optional comment. In the future, may include a
-# min and max hours to communicate a range.
+# An estimate of how long the task at hand will take. Currently consists only of a number of hours
+# and an optional comment. In the future, may include a min and max hours to communicate a range.
 class Estimate
 
   @MAX_COMMENT_LEN = 255
@@ -31,7 +30,8 @@ class Estimate
     foo.hours = bar.hours && foo.comment == bar.comment
 
   ##
-  # An estimate is valid if either the hours is set or the comment has anything in it other than whitespace.
+  # An estimate is valid if either the hours is set or the comment has anything in it other than
+  # whitespace.
   isValid: -> @hours? or (@comment? and /.*\w.*/.test(@comment))
 
 module.exports = Estimate

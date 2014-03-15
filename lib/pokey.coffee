@@ -11,7 +11,7 @@ class Pokey
   constructor: (app, sockets) ->
     @_sessions = {}
 
-    app.get '/stats', (req, res) =>
+    app.get '/stats', (req, res) ->
       res.json
         rooms: Room.all()
         users: User.all()
@@ -42,8 +42,8 @@ class Pokey
       #
       # @param {object} req
       # @param {string} req.roomName - the name to give the room
-      socket.on 'createRoom', =>
-        socket.get 'user', (error, user) =>
+      socket.on 'createRoom', ->
+        socket.get 'user', (error, user) ->
           if error? or !user?
             socket.emit('error', 'could not get user for socket', error)
             return
@@ -61,8 +61,8 @@ class Pokey
       #
       # @param {object} req
       # @param {string} req.roomId - the ID of the room to join
-      socket.on 'joinRoom', (req) =>
-        socket.get 'user', (error, user) =>
+      socket.on 'joinRoom', (req) ->
+        socket.get 'user', (error, user) ->
           if error? or !user?
             socket.emit('error', 'must register before joining a room')
             return
@@ -89,13 +89,13 @@ class Pokey
       # Submit an estimate to the room.
       #
       # @param {Estimate} estimate
-      socket.on 'submitEstimate', (estimate) =>
-        socket.get 'user', (error, user) =>
+      socket.on 'submitEstimate', (estimate) ->
+        socket.get 'user', (error, user) ->
           if error? or !user?
             socket.emit('error', 'could not associate user with user')
             return
 
-          socket.get 'room', (error, room) =>
+          socket.get 'room', (error, room) ->
             if error? or !room?
               socket.emit('error', 'could not associate room with user')
               return
@@ -115,13 +115,13 @@ class Pokey
 
       ##
       # Reveal estimates to members of the room.
-      socket.on 'showEstimates', =>
-        socket.get 'user', (error, user) =>
+      socket.on 'showEstimates', ->
+        socket.get 'user', (error, user) ->
           if error? or !user?
             socket.emit('error', 'could not associate user with user')
             return
 
-          socket.get 'room', (error, room) =>
+          socket.get 'room', (error, room) ->
             if error? or !room?
               socket.emit('error', 'could not associate room with user')
               return
@@ -137,13 +137,13 @@ class Pokey
       ##
       # Conceal everyone's estimates. And I guess hope they have the memory of a goldfish and no
       # logging enabled. Included for completeness, I guess?
-      socket.on 'hideEstimates', =>
-        socket.get 'user', (error, user) =>
+      socket.on 'hideEstimates', ->
+        socket.get 'user', (error, user) ->
           if error? or !user?
             socket.emit('error', 'could not associate user with user')
             return
 
-          socket.get 'room', (error, room) =>
+          socket.get 'room', (error, room) ->
             if error? or !room?
               socket.emit('error', 'could not associate room with user')
               return
@@ -159,13 +159,13 @@ class Pokey
 
       ##
       # Clear the current estimates.
-      socket.on 'clearEstimates', =>
-        socket.get 'user', (error, user) =>
+      socket.on 'clearEstimates', ->
+        socket.get 'user', (error, user) ->
           if error? or !user?
             socket.emit('error', 'could not associate user with user')
             return
 
-          socket.get 'room', (error, room) =>
+          socket.get 'room', (error, room) ->
             if error? or !room?
               socket.emit('error', 'could not associate room with user')
               return
@@ -177,13 +177,13 @@ class Pokey
               room.clearEstimates()
               sockets.in(room.id).emit('roomUpdated', room.sanitized())
 
-      socket.on 'disconnect', =>
-        socket.get 'user', (error, user) =>
+      socket.on 'disconnect', ->
+        socket.get 'user', (error, user) ->
           if error? or !user?
             socket.emit('error', 'could not associate user with user')
             return
 
-          socket.get 'room', (error, room) =>
+          socket.get 'room', (error, room) ->
             if error? or !room?
               socket.emit('error', 'could not associate room with user')
               return
