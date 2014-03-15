@@ -1,7 +1,5 @@
 define([
   'underscore',
-
-  // Mix-ins
   'services/EstimateHistogram'
 ], function (
     _,
@@ -10,13 +8,13 @@ define([
   'use strict';
 
   return [
-    '$scope',
     '$routeParams',
+    '$scope',
     'pokeyService',
     'registrationDialog',
     function (
-        $scope,
         $routeParams,
+        $scope,
         pokeyService,
         registrationDialog
         ) {
@@ -78,7 +76,6 @@ define([
         pokeyService.clearEstimates();
       };
 
-      // TODO Buttons do not display for owner when navigating from lobby.
       $scope.isOwner = function () {
         return $scope.room &&
             $scope.room.owner &&
