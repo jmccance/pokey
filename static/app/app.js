@@ -3,10 +3,14 @@ define([
   'socketio',
 
   'controllers/ErrorCtrl',
+
+  'directives/ErrorAlert',
+
   'dialogs/RegistrationDialog',
   'lobby/LobbyCtrl',
   'navbar/NavBarCtrl',
   'room/RoomCtrl',
+
   'services/PokeyService',
 
   // Mix-ins
@@ -17,6 +21,7 @@ define([
     angular,
     socketio,
     ErrorCtrl,
+    ErrorAlert,
     RegistrationDialog,
     LobbyCtrl,
     NavBarCtrl,
@@ -45,11 +50,7 @@ define([
               });
         }])
 
-      .directive('errorAlert', function () {
-        return {
-          template: '<div class="alert alert-danger alert-dismissable" data-ng-repeat="error in errors"> <button type="button" class="close" data-dismiss="alert"aria-hidden="true">&times;</button> {{error.message}} </div>'
-        };
-      })
+      .directive('errorAlert', ErrorAlert)
 
       .controller('ErrorCtrl', [
         '$scope',
