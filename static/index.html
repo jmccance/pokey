@@ -34,14 +34,7 @@
 
 <div class="container"
      data-ng-controller="ErrorCtrl">
-    <div class="alert alert-danger alert-dismissable"
-         data-ng-repeat="error in errors">
-        <button type="button"
-                class="close"
-                data-dismiss="alert"
-                aria-hidden="true">&times;</button>
-        {{error.message}}
-    </div>
+    <div data-error-alert/>
 </div>
 
 <div class="container" data-ng-view>

@@ -45,6 +45,12 @@ define([
               });
         }])
 
+      .directive('errorAlert', function () {
+        return {
+          template: '<div class="alert alert-danger alert-dismissable" data-ng-repeat="error in errors"> <button type="button" class="close" data-dismiss="alert"aria-hidden="true">&times;</button> {{error.message}} </div>'
+        };
+      })
+
       .controller('ErrorCtrl', [
         '$scope',
         'pokeyService',
