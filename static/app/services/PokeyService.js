@@ -32,6 +32,10 @@ define([
     socket.on('roomUpdated', function (room) {
       self.fire('roomUpdated', room);
     });
+
+    socket.on('error', function (error) {
+      self.fire('error', error);
+    });
   };
 
   // Delegate the event handler methods to bean.

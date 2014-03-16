@@ -2,6 +2,7 @@ define([
   'angular',
   'socketio',
 
+  'controllers/ErrorCtrl',
   'dialogs/RegistrationDialog',
   'lobby/LobbyCtrl',
   'navbar/NavBarCtrl',
@@ -15,6 +16,7 @@ define([
 ], function (
     angular,
     socketio,
+    ErrorCtrl,
     RegistrationDialog,
     LobbyCtrl,
     NavBarCtrl,
@@ -43,6 +45,11 @@ define([
               });
         }])
 
+      .controller('ErrorCtrl', [
+        '$scope',
+        'pokeyService',
+        ErrorCtrl
+      ])
       .controller('LobbyCtrl', LobbyCtrl)
       .controller('RoomCtrl', RoomCtrl)
       .controller('NavBarCtrl', NavBarCtrl)
