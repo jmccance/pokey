@@ -23,8 +23,12 @@ class Pokey
       #
       # @param {object} req
       # @param {string} req.sessionId - the session ID, which the client got from its cookie
-      # @param {string} req.name - the name to register for this user
+      # @param {string} req.name - the name to register for this user; must be non-empty and non-whitespace
       socket.on 'register', (req) =>
+        if !req.name? or /^\s*$/.test(req.name) == ''
+          socket.emit('error', 'username must be non-empty')
+          return
+
         sessionId = req.sessionId
         user =
           if !@_sessions[sessionId]?
