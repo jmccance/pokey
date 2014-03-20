@@ -57,7 +57,14 @@ define([
        * Submit the current estimate.
        */
       $scope.submitEstimate = function () {
-        pokeyService.submitEstimate($scope.estimate);
+        var estimate = $scope.estimate;
+        // If the estimate is valid, post it. Otherwise, rely on browser-based validation.
+        // TODO Client-side domain objects to handle validation like this.
+        if (_.isNumber(estimate.hours) ||
+            (!_.isUndefined(estimate.comment) && /.*\S.*/.test(estimate.comment))) {
+          pokeyService.submitEstimate($scope.estimate);
+          $scope.estimate = {};
+        }
       };
 
       /**
