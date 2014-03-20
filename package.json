@@ -2,7 +2,7 @@
   "name": "Pokey",
   "description": "Planning poker with fancy charts",
   "author": "Joel McCance",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "repository": {
     "type": "git",
     "url": "http://bitbucket.org/jmccance/pokey.git"
