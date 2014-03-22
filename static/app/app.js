@@ -2,13 +2,13 @@ define([
   'angular',
   'socketio',
 
-  'errors/ErrorCtrl',
-  'dialogs/RegistrationDialog',
+  'alerts/AlertCtrl',
+  'registrationDialog/RegistrationDialog',
   'lobby/LobbyCtrl',
   'navbar/NavBarCtrl',
   'room/RoomCtrl',
 
-  'services/PokeyService',
+  'api/PokeyService',
 
   // Mix-ins
   'angularBootstrap',
@@ -17,8 +17,7 @@ define([
 ], function (
     angular,
     socketio,
-    ErrorCtrl,
-    ErrorAlert,
+    AlertCtrl,
     RegistrationDialog,
     LobbyCtrl,
     NavBarCtrl,
@@ -47,10 +46,10 @@ define([
               });
         }])
 
-      .controller('ErrorCtrl', [
+      .controller('AlertCtrl', [
         '$scope',
         'pokeyService',
-        ErrorCtrl
+        AlertCtrl
       ])
       .controller('LobbyCtrl', LobbyCtrl)
       .controller('RoomCtrl', RoomCtrl)

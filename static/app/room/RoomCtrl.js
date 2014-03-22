@@ -1,6 +1,6 @@
 define([
   'underscore',
-  'services/EstimateHistogram'
+  'room/EstimateHistogram'
 ], function (
     _,
     EstimateHistogram

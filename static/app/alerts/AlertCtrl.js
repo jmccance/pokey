@@ -1,21 +1,21 @@
 define(function () {
-  var ErrorCtrl = function ($scope, pokeyService) {
-    $scope.errors = [];
+  var AlertCtrl = function ($scope, pokeyService) {
+    $scope.alerts = [];
 
-    // Clear errors on location change.
+    // Clear alerts on location change.
     $scope.$on('$locationChangeSuccess', function () {
-      $scope.errors = [];
+      $scope.alerts = [];
     });
 
     $scope.closeAlert = function (index) {
-      $scope.errors.splice(index, 1);
+      $scope.alerts.splice(index, 1);
     };
 
     // Display an alert when an error event is fired.
     pokeyService.on('error', function (message) {
       console.log('error', message);
       $scope.$apply(function () {
-        $scope.errors.push({
+        $scope.alerts.push({
           type: 'danger',
           message: message
         });
@@ -23,5 +23,5 @@ define(function () {
     });
   };
 
-  return ErrorCtrl;
+  return AlertCtrl;
 });

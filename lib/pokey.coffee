@@ -1,6 +1,6 @@
-Estimate = require './model/estimate'
-Room = require './model/room'
-User = require './model/user'
+Estimate = require './domain/estimate'
+Room = require './domain/room'
+User = require './domain/user'
 
 ##
 # Manages the controllers and routes for a Pokey instance. At the moment, it just *is* the
