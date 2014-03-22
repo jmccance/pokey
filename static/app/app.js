@@ -3,6 +3,7 @@ define([
   'socketio',
 
   'alerts/AlertCtrl',
+  'alerts/AlertService',
   'registrationDialog/RegistrationDialog',
   'lobby/LobbyCtrl',
   'navbar/NavBarCtrl',
@@ -18,6 +19,7 @@ define([
     angular,
     socketio,
     AlertCtrl,
+    AlertService,
     RegistrationDialog,
     LobbyCtrl,
     NavBarCtrl,
@@ -48,7 +50,7 @@ define([
 
       .controller('AlertCtrl', [
         '$scope',
-        'pokeyService',
+        'alertService',
         AlertCtrl
       ])
       .controller('LobbyCtrl', LobbyCtrl)
@@ -56,15 +58,21 @@ define([
       .controller('NavBarCtrl', NavBarCtrl)
 
       .factory('sessionId', [
-          '$cookies',
-          function($cookies) {
-            return $cookies['pokey.session'];
-          }
+        '$cookies',
+        function($cookies) {
+          return $cookies['pokey.session'];
+        }
       ])
 
       .factory('socket', function() {
         return socketio.connect();
       })
+
+      .service('alertService', [
+        '$rootScope',
+        'pokeyService',
+        AlertService
+      ])
 
       .service('pokeyService', [
         '$cookies',
