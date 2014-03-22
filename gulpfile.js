@@ -1,7 +1,9 @@
 var gulp = require('gulp');
 
-var jshint = require('gulp-jshint');
+// Linting
+
 var coffeelint = require('gulp-coffeelint');
+var jshint = require('gulp-jshint');
 
 gulp.task('jshint', function () {
   gulp.src('static/app/**/*.js')
@@ -18,3 +20,14 @@ gulp.task('coffeelint', function () {
 });
 
 gulp.task('lint', ['jshint', 'coffeelint']);
+
+// Nodemon
+
+var nodemon = require('gulp-nodemon');
+
+gulp.task('develop', function () {
+  nodemon({
+    script: 'server.coffee',
+    ext: 'coffee'
+  });
+});
