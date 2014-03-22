@@ -31,3 +31,17 @@ gulp.task('develop', function () {
     ext: 'coffee'
   });
 });
+
+// (EXPERIMENTAL) RequireJS Build
+
+var rjs = require('requirejs');
+
+gulp.task('build', function (cb) {
+  rjs.optimize({
+    mainConfigFile: 'static/app/requireConfig.js',
+    name: 'app',
+    out: 'footest.js'
+  }, function () {
+    cb();
+  }, cb);
+});
