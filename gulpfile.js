@@ -38,9 +38,13 @@ var rjs = require('requirejs');
 
 gulp.task('build', function (cb) {
   rjs.optimize({
-    mainConfigFile: 'static/app/requireConfig.js',
-    name: 'app',
-    out: 'footest.js'
+    appDir: './static',
+    mainConfigFile: 'static/app/main.js',
+    dir: './dist',
+    modules: [
+      { name: 'main' }
+    ],
+    removeCombined: true
   }, function () {
     cb();
   }, cb);

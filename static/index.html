@@ -44,28 +44,6 @@
 <div class="container" data-ng-view>
 </div>
 
-<script src="lib/requirejs/require.js"></script>
-<script src="app/requireConfig.js"></script>
-<script>
-    //http://code.angularjs.org/1.2.1/docs/guide/bootstrap#overview_deferred-bootstrap
-    window.name = 'NG_DEFER_BOOTSTRAP!';
-
-    require( [
-        'angular',
-        'app',
-
-        // Mixins
-        'bootstrap'
-    ], function(
-            angular,
-            app) {
-        'use strict';
-        angular.element(document.getElementsByTagName('html')[0]);
-
-        angular.element().ready(function() {
-            angular.resumeBootstrap([app.name]);
-        });
-    });
-</script>
+<script data-main="app/main" src="lib/requirejs/require.js"></script>
 </body>
 </html>

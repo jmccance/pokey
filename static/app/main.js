@@ -1,5 +1,5 @@
 require.config({
-  baseUrl: '../app',
+  baseUrl: 'app',
   paths: {
     angular: '../lib/angular/angular.min',
     angularBootstrap: '../lib/angular-bootstrap/ui-bootstrap-tpls.min',
@@ -36,4 +36,24 @@ require.config({
       exports: '_'
     }
   }
+});
+
+//http://code.angularjs.org/1.2.1/docs/guide/bootstrap#overview_deferred-bootstrap
+window.name = 'NG_DEFER_BOOTSTRAP!';
+
+require( [
+  'angular',
+  'app',
+
+  // Mixins
+  'bootstrap'
+], function(
+    angular,
+    app) {
+  'use strict';
+  angular.element(document.getElementsByTagName('html')[0]);
+
+  angular.element().ready(function() {
+    angular.resumeBootstrap([app.name]);
+  });
 });
