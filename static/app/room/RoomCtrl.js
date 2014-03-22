@@ -1,8 +1,10 @@
 define([
   'underscore',
+  'api/domain/Estimate',
   'room/EstimateHistogram'
 ], function (
     _,
+    Estimate,
     EstimateHistogram
     ) {
   'use strict';
@@ -21,7 +23,7 @@ define([
       var roomId = $routeParams.roomId,
           histogram = new EstimateHistogram($('[data-node-name="chart"]'));
 
-      $scope.estimate = {};
+      $scope.estimate = new Estimate();
       $scope.user = pokeyService.getUser();
       $scope.isOwner = false;
 
@@ -58,12 +60,9 @@ define([
        */
       $scope.submitEstimate = function () {
         var estimate = $scope.estimate;
-        // If the estimate is valid, post it. Otherwise, rely on browser-based validation.
-        // TODO Client-side domain objects to handle validation like this.
-        if (_.isNumber(estimate.hours) ||
-            (!_.isUndefined(estimate.comment) && /.*\S.*/.test(estimate.comment))) {
+        if (estimate.isValid()) {
           pokeyService.submitEstimate($scope.estimate);
-          $scope.estimate = {};
+          $scope.estimate = new Estimate();
         }
       };
 
@@ -78,8 +77,7 @@ define([
        * Clear existing estimates. Must be the room owner in order to do so.
        */
       $scope.clearEstimates = function () {
-        $scope.estimate.hours = null;
-        $scope.estimate.comment = null;
+        $scope.estimate = new Estimate();
         pokeyService.clearEstimates();
       };
 
