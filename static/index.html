@@ -34,7 +34,8 @@
 
 <div class="container"
      data-ng-controller="ErrorCtrl">
-    <div data-error-alert/>
+    <alert ng-repeat="error in errors" type="error.type" close="closeAlert($index)" data-ng-bind="error.message">
+    </alert>
 </div>
 
 <div class="container" data-ng-view>

@@ -2,10 +2,7 @@ define([
   'angular',
   'socketio',
 
-  'controllers/ErrorCtrl',
-
-  'directives/ErrorAlert',
-
+  'errors/ErrorCtrl',
   'dialogs/RegistrationDialog',
   'lobby/LobbyCtrl',
   'navbar/NavBarCtrl',
@@ -49,8 +46,6 @@ define([
                 controller: 'RoomCtrl'
               });
         }])
-
-      .directive('errorAlert', ErrorAlert)
 
       .controller('ErrorCtrl', [
         '$scope',
