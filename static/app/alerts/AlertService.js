@@ -33,6 +33,10 @@ define([
 
     getAlerts: function () {
       return this.alerts;
+    },
+
+    remove: function (index) {
+      this.alerts.splice(index, 1);
     }
   };
 

@@ -36,10 +36,6 @@ define([
     socket.on('error', function (error) {
       self.fire('error', error);
     });
-
-    socket.on('disconnect', function () {
-      alert('Connection lost. Please refresh the page.');
-    });
   };
 
   // Delegate the event handler methods to bean.

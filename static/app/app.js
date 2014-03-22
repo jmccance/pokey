@@ -51,6 +51,7 @@ define([
       .controller('AlertCtrl', [
         '$scope',
         'alertService',
+        'socket',
         AlertCtrl
       ])
       .controller('LobbyCtrl', LobbyCtrl)

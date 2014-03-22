@@ -34,7 +34,10 @@
 
 <div class="container"
      data-ng-controller="AlertCtrl">
-    <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)" data-ng-bind="alert.message">
+    <alert ng-repeat="alert in alerts"
+           type="alert.type"
+           close="closeAlert($index)">
+        <span data-ng-bind="alert.message"></span>
     </alert>
 </div>
 
