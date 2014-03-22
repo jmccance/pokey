@@ -10,7 +10,6 @@
     "bean": "1.0.6",
     "bootstrap": "3.0.3",
     "jquery": "1.9.1",
-    "q": "1.0",
     "underscore": "1.5.2",
     "requirejs": "2.1.9",
     "socket.io-client": "0.9.15"

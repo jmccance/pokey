@@ -1,10 +1,8 @@
 define([
   'bean',
-  'Q',
   'underscore'
 ], function (
     bean,
-    Q,
     _
     ) {
   'use strict';
