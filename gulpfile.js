@@ -1,5 +1,14 @@
 var gulp = require('gulp');
 
+// Clean
+
+var clean = require('gulp-clean');
+
+gulp.task('clean', function () {
+  gulp.src('dist')
+      .pipe(clean());
+});
+
 // Linting
 
 var coffeelint = require('gulp-coffeelint');
@@ -32,7 +41,7 @@ gulp.task('develop', function () {
   });
 });
 
-// (EXPERIMENTAL) RequireJS Build
+// RequireJS Build
 
 var rjs = require('requirejs');
 
@@ -49,3 +58,7 @@ gulp.task('build', function (cb) {
     cb();
   }, cb);
 });
+
+// Combined tasks
+
+gulp.task('predeploy', ['clean', 'lint', 'build']);
