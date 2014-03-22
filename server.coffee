@@ -4,6 +4,11 @@ socketio  = require 'socket.io'
 
 Pokey = require './lib/pokey'
 
+staticSite =
+  switch process.env.NODE_ENV
+    when 'production' then '/dist'
+    else '/static'
+
 app = express()
 server = http.createServer(app)
 io = socketio.listen(server)
@@ -24,7 +29,7 @@ app
     req.session.id = getRandomId() unless req.session.id?
     next()
   )
-  .use(express.static(__dirname + '/static'))
+  .use(express.static(__dirname + staticSite))
 
 io.configure 'development', ->
   io.set 'transports', ['websocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']
