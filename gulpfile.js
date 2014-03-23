@@ -60,7 +60,11 @@ gulp.task('build', function (cb) {
     modules: [
       { name: 'main' }
     ],
-    removeCombined: true
+
+    optimize: 'uglify2',
+    removeCombined: true,
+    preserveLicenseComments: false,
+    generateSourceMaps: true
   }, function () {
     cb();
   }, cb);
