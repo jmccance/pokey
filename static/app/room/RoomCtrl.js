@@ -1,10 +1,10 @@
 define([
+  'jquery',
   'underscore',
-  'api/domain/Estimate',
   'room/EstimateHistogram'
 ], function (
+    $,
     _,
-    Estimate,
     EstimateHistogram
     ) {
   'use strict';
@@ -23,7 +23,6 @@ define([
       var roomId = $routeParams.roomId,
           histogram = new EstimateHistogram($('[data-node-name="chart"]'));
 
-      $scope.estimate = new Estimate();
       $scope.user = pokeyService.getUser();
       $scope.isOwner = false;
 
@@ -58,12 +57,9 @@ define([
       /**
        * Submit the current estimate.
        */
-      $scope.submitEstimate = function () {
-        var estimate = $scope.estimate;
-        if (estimate.isValid()) {
-          pokeyService.submitEstimate($scope.estimate);
-          $scope.estimate = new Estimate();
-        }
+      $scope.submitEstimate = function (estimate) {
+        pokeyService.submitEstimate(estimate);
+        $scope.estimate = {};
       };
 
       /**
@@ -77,7 +73,7 @@ define([
        * Clear existing estimates. Must be the room owner in order to do so.
        */
       $scope.clearEstimates = function () {
-        $scope.estimate = new Estimate();
+        $scope.estimate = {};
         pokeyService.clearEstimates();
       };
 
