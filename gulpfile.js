@@ -1,4 +1,11 @@
+/* jshint strict: false */
+
 var gulp = require('gulp');
+
+var paths = {
+  server: ['**/*.coffee', '!node_modules/**/*.coffee'],
+  client: 'static/app/**/*.js'
+};
 
 // Clean
 
@@ -15,13 +22,13 @@ var coffeelint = require('gulp-coffeelint');
 var jshint = require('gulp-jshint');
 
 gulp.task('jshint', function () {
-  gulp.src('static/app/**/*.js')
+  return gulp.src(paths.client)
     .pipe(jshint())
     .pipe(jshint.reporter('default'));
 });
 
 gulp.task('coffeelint', function () {
-  gulp.src(['**/*.coffee', '!node_modules/**/*.coffee'])
+  return gulp.src(paths.server)
     .pipe(coffeelint({
       optFile: 'coffeelint.json'
     }))
@@ -34,7 +41,7 @@ gulp.task('lint', ['jshint', 'coffeelint']);
 
 var nodemon = require('gulp-nodemon');
 
-gulp.task('develop', function () {
+gulp.task('nodemon', function () {
   nodemon({
     script: 'server.coffee',
     ext: 'coffee'
@@ -61,4 +68,5 @@ gulp.task('build', function (cb) {
 
 // Combined tasks
 
+gulp.task('develop', ['nodemon']);
 gulp.task('predeploy', ['clean', 'lint', 'build']);
