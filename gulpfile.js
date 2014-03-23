@@ -73,4 +73,4 @@ gulp.task('build', function (cb) {
 // Combined tasks
 
 gulp.task('develop', ['nodemon']);
-gulp.task('predeploy', ['clean', 'lint', 'build']);
+gulp.task('predeploy', ['lint', 'build']);
