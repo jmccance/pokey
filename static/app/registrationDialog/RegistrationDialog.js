@@ -1,17 +1,20 @@
 define(function () {
+  'use strict';
+
   var RegistrationCtrl = function($scope, $modalInstance, pokeyService) {
     // Create a "sub-scope" of sorts since this is a "subcontroller". I don't pretend to understand
     // quite what's going on here.
     // See: http://stackoverflow.com/questions/18716113/scope-issue-in-angularjs-using-angularui-bootstrap-modal
-    $scope.dialog = {};
+    $scope.user = {};
     var user = pokeyService.getUser();
-    $scope.dialog.username = user ? user.name : '';
+    $scope.user.name = user ? user.name : '';
 
-    $scope.register = function () {
+    $scope.register = function (user) {
       pokeyService.one('registered', function() {
         $modalInstance.close();
       });
-      pokeyService.register($scope.dialog.username);
+      console.log(user);
+      pokeyService.register(user.name);
     };
   };
 
