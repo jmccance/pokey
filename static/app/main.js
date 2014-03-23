@@ -1,16 +1,16 @@
 require.config({
   baseUrl: 'app',
   paths: {
-    angular: '../lib/angular/angular.min',
-    angularBootstrap: '../lib/angular-bootstrap/ui-bootstrap-tpls.min',
-    angularRoute: '../lib/angular-route/angular-route.min',
-    angularCookies: '../lib/angular-cookies/angular-cookies.min',
-    bean: '../lib/bean/bean.min',
-    bootstrap: '../lib/bootstrap/dist/js/bootstrap.min',
+    angular: '../lib/angular/angular',
+    angularBootstrap: '../lib/angular-bootstrap/ui-bootstrap-tpls',
+    angularRoute: '../lib/angular-route/angular-route',
+    angularCookies: '../lib/angular-cookies/angular-cookies',
+    bean: '../lib/bean/bean',
+    bootstrap: '../lib/bootstrap/dist/js/bootstrap',
     highcharts: 'http://code.highcharts.com/highcharts',
-    jquery: '../lib/jquery/jquery.min',
-    socketio: '../lib/socket.io-client/dist/socket.io.min',
-    underscore: '../lib/underscore/underscore-min'
+    jquery: '../lib/jquery/jquery',
+    socketio: '../lib/socket.io-client/dist/socket.io',
+    underscore: '../lib/underscore/underscore'
   },
   shim: {
     angular: {

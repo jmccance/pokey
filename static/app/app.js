@@ -1,15 +1,16 @@
 define([
+  // External dependencies
   'angular',
   'socketio',
 
+  // Internal dependencies
   'alerts/AlertCtrl',
   'alerts/AlertService',
+  'api/PokeyService',
   'registrationDialog/RegistrationDialog',
   'lobby/LobbyCtrl',
   'navbar/NavBarCtrl',
   'room/RoomCtrl',
-
-  'api/PokeyService',
 
   // Mix-ins
   'angularBootstrap',
@@ -20,11 +21,11 @@ define([
     socketio,
     AlertCtrl,
     AlertService,
+    PokeyService,
     RegistrationDialog,
     LobbyCtrl,
     NavBarCtrl,
-    RoomCtrl,
-    PokeyService
+    RoomCtrl
     ) {
   'use strict';
 
@@ -54,9 +55,28 @@ define([
         'socket',
         AlertCtrl
       ])
-      .controller('LobbyCtrl', LobbyCtrl)
-      .controller('RoomCtrl', RoomCtrl)
-      .controller('NavBarCtrl', NavBarCtrl)
+
+      .controller('LobbyCtrl', [
+        '$location',
+        '$scope',
+        'pokeyService',
+        'registrationDialog',
+        LobbyCtrl
+      ])
+
+      .controller('NavBarCtrl', [
+        '$scope',
+        'registrationDialog',
+        NavBarCtrl
+      ])
+
+      .controller('RoomCtrl', [
+        '$routeParams',
+        '$scope',
+        'pokeyService',
+        'registrationDialog',
+        RoomCtrl
+      ])
 
       .factory('sessionId', [
         '$cookies',
