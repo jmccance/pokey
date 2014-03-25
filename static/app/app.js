@@ -9,13 +9,13 @@ define([
   'api/PokeyService',
   'registrationDialog/RegistrationDialog',
   'lobby/LobbyCtrl',
-  'navbar/NavBarCtrl',
   'room/RoomCtrl',
 
   // Mix-ins
   'angularBootstrap',
   'angularCookies',
-  'angularRoute'
+  'angularRoute',
+  'navbar/NavBar'
 ], function (
     angular,
     socketio,
@@ -32,7 +32,8 @@ define([
   var pokeyApp = angular.module('pokeyApp', [
     'ngRoute',
     'ngCookies',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'pokey.navbar.NavBar'
   ]);
 
   pokeyApp
@@ -62,12 +63,6 @@ define([
         'pokeyService',
         'registrationDialog',
         LobbyCtrl
-      ])
-
-      .controller('NavBarCtrl', [
-        '$scope',
-        'registrationDialog',
-        NavBarCtrl
       ])
 
       .controller('RoomCtrl', [
