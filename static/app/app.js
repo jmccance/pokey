@@ -4,8 +4,6 @@ define([
   'socketio',
 
   // Internal dependencies
-  'alerts/AlertCtrl',
-  'alerts/AlertService',
   'api/PokeyService',
   'registrationDialog/RegistrationDialog',
   'lobby/LobbyCtrl',
@@ -15,16 +13,14 @@ define([
   'angularBootstrap',
   'angularCookies',
   'angularRoute',
+  'alerts/Alerts',
   'navbar/NavBar'
 ], function (
     angular,
     socketio,
-    AlertCtrl,
-    AlertService,
     PokeyService,
     RegistrationDialog,
     LobbyCtrl,
-    NavBarCtrl,
     RoomCtrl
     ) {
   'use strict';
@@ -33,6 +29,7 @@ define([
     'ngRoute',
     'ngCookies',
     'ui.bootstrap',
+    'pokey.alerts.Alerts',
     'pokey.navbar.NavBar'
   ]);
 
@@ -49,13 +46,6 @@ define([
                 controller: 'RoomCtrl'
               });
         }])
-
-      .controller('AlertCtrl', [
-        '$scope',
-        'alertService',
-        'socket',
-        AlertCtrl
-      ])
 
       .controller('LobbyCtrl', [
         '$location',
@@ -83,12 +73,6 @@ define([
       .factory('socket', function() {
         return socketio.connect();
       })
-
-      .service('alertService', [
-        '$rootScope',
-        'pokeyService',
-        AlertService
-      ])
 
       .service('pokeyService', [
         '$cookies',
