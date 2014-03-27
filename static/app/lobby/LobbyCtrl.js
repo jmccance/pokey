@@ -1,10 +1,7 @@
-define(function () {
+define(function() {
   'use strict';
 
-  /**
-   * @class lobby.LobbyCtrl
-   */
-  return function (
+  return function(
       $location,
       $scope,
       pokeyService,
@@ -20,11 +17,11 @@ define(function () {
     }
 
     // Handle room creation
-    $scope.createRoom = function () {
+    $scope.createRoom = function() {
       // Once the room is successfully created, redirect to it.
-      pokeyService.one('roomCreated', function (room) {
+      pokeyService.one('roomCreated', function(room) {
         console.log('Room created. Navigating to it.');
-        $scope.$apply(function () {
+        $scope.$apply(function() {
           $location.path('/room/' + room.id);
         });
       });

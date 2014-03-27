@@ -6,7 +6,6 @@ define([
   // Internal dependencies
   'api/PokeyService',
   'registrationDialog/RegistrationDialog',
-  'lobby/LobbyCtrl',
   'room/RoomCtrl',
 
   // Mix-ins
@@ -14,13 +13,13 @@ define([
   'angularCookies',
   'angularRoute',
   'alerts/Alerts',
+  'lobby/Lobby',
   'navbar/NavBar'
 ], function (
     angular,
     socketio,
     PokeyService,
     RegistrationDialog,
-    LobbyCtrl,
     RoomCtrl
     ) {
   'use strict';
@@ -30,6 +29,7 @@ define([
     'ngCookies',
     'ui.bootstrap',
     'pokey.alerts.Alerts',
+    'pokey.lobby.Lobby',
     'pokey.navbar.NavBar'
   ]);
 
@@ -37,23 +37,11 @@ define([
       .config(['$routeProvider',
         function ($routeProvider) {
           $routeProvider.
-              when('/', {
-                templateUrl: 'app/lobby/lobby.html',
-                controller: 'LobbyCtrl'
-              }).
               when('/room/:roomId', {
                 templateUrl: 'app/room/room.html',
                 controller: 'RoomCtrl'
               });
         }])
-
-      .controller('LobbyCtrl', [
-        '$location',
-        '$scope',
-        'pokeyService',
-        'registrationDialog',
-        LobbyCtrl
-      ])
 
       .controller('RoomCtrl', [
         '$routeParams',
