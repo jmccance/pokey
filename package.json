@@ -5,7 +5,7 @@
   "version": "0.9.6",
   "repository": {
     "type": "git",
-    "url": "http://bitbucket.org/jmccance/pokey.git"
+    "url": "http://github.com/jmccance/pokey.git"
   },
   "dependencies": {
     "coffee-script": "~1.7.1",
