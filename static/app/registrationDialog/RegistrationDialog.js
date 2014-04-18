@@ -28,6 +28,7 @@ define(function () {
     this.$modal
         .open({
           templateUrl: 'app/registrationDialog/registrationDialog.html',
+          backdrop: 'static',
           controller: ['$scope', '$modalInstance', 'pokeyService', RegistrationCtrl],
           resolve: {
             pokeyService: function () { return self.pokeyService; }
