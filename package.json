@@ -17,7 +17,7 @@
   ],
   "subdomain": "pokey",
   "scripts": {
-    "prepublish": "gulp predeploy",
+    "prepublish": "./node_modules/.bin/gulp predeploy",
     "start": "./node_modules/.bin/coffee server.coffee"
   },
   "engines": {
