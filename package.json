@@ -13,11 +13,16 @@
     "socket.io": "0.9.15"
   },
   "files": [
-    "dist"
+    "coffeelint.json",
+    "config.json",
+    "dist",
+    "gulpfile.js",
+    "lib",
+    "server.coffee"
   ],
   "subdomain": "pokey",
   "scripts": {
-    "prepublish": "./node_modules/.bin/gulp predeploy",
+    "predeploy": "gulp predeploy",
     "start": "./node_modules/.bin/coffee server.coffee"
   },
   "engines": {
