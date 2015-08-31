@@ -6,7 +6,7 @@ class Room
 
   @add: (room) ->
     # TODO Test if room is a Room
-    id = room.id = @nextId
+    id = room.id = "#{@nextId}"
     @rooms[id] = room
     @nextId += 1
     console.log('Adding room', room)
