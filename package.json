@@ -2,7 +2,7 @@
   "name": "Pokey",
   "description": "Planning poker with fancy charts",
   "author": "Joel McCance",
-  "version": "0.9.8-1",
+  "version": "0.9.8-2",
   "repository": {
     "type": "git",
     "url": "http://github.com/jmccance/pokey.git"
@@ -12,9 +12,13 @@
     "express": "3.5.0",
     "socket.io": "0.9.15"
   },
+  "files": [
+    "dist"
+  ],
   "subdomain": "pokey",
   "scripts": {
-    "predeploy": "gulp predeploy",
+    "prepublish": "gulp predeploy",
+
     "start": "./node_modules/.bin/coffee server.coffee"
   },
   "engines": {
